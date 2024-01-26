@@ -33,7 +33,7 @@ function showProjects(projects) {
 
           }
 
-          $(clone).find('.text').text(obj["text"]);
+          $(clone).find('.text').html(obj["text"]);
           $(clone).find('.background').css("background-image",`url(${obj["pic"]})`);
 
 

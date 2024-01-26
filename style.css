@@ -331,5 +331,9 @@ body {
 @media only screen and (max-width: 600px) {
   #card-container {
     width: 80vw;
-  }
+  }#card-container {
+
+       gap: 0 7%;
+
+   }
 }
