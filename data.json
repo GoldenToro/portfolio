@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "title": "Golden Ghost",
+    "tags": ["Website","HTML+JS+CSS"],
+    "status": "Fertig",
+    "datum": "",
+    "text": "Eine berufliche Website ist ein unverzichtbares Instrument, um deine berufliche Präsenz im digitalen Raum zu etablieren. Hier kannst du deine beruflichen Erfahrungen, Fähigkeiten, Projekte und Erfolge präsentieren. Eine professionelle Website dient nicht nur als digitales Portfolio, sondern auch als zentrale Anlaufstelle für potenzielle Arbeitgeber, Kunden oder Geschäftspartner, um mehr über deine Kompetenzen und deine berufliche Historie zu erfahren. Sie ermöglicht es, deine Expertise und Professionalität zu unterstreichen, was entscheidend sein kann, wenn es um berufliche Chancen, Netzwerkaufbau und die Förderung deiner Karriere geht.",
+    "type": "web",
+    "pic": "pics/gg.png",
+    "link":"https://golden-ghost.com/",
+    "show": true
+  },
+  {
+    "id": 2,
+    "title": "MXGLD",
+    "tags": ["Website","HTML+JS+CSS"],
+    "status": "In Arbeit",
+    "text": "Die Gestaltung einer persönlichen Website dient als digitales Schaufenster, um sich auf persönlicher Ebene vorzustellen. Hier hast du die Möglichkeit, deine Interessen, Hobbys, Lebenserfahrungen und persönlichen Meilensteine zu teilen. Eine private Website ermöglicht es Freunden, Familie und Bekannten, einen umfassenden Einblick in dein Leben zu bekommen, selbst wenn sie geografisch entfernt sind. Durch die Präsentation von Fotos, Geschichten und persönlichen Gedanken schaffst du eine Plattform, auf der du deine Identität online reflektieren und mit anderen teilen kannst.",
+    "type": "web",
+    "pic": "pics/mxgld.jpg",
+    "link":"https://www.mxgld.de/",
+    "show": true
+  },
+  {
+    "id": 3,
+    "title": "Portfolio",
+    "tags": ["Website","HTML+JS+CSS"],
+    "status": "active",
+    "text": "Die Gestaltung einer persönlichen Website dient als digitales Schaufenster, um sich auf persönlicher Ebene vorzustellen. Hier hast du die Möglichkeit, deine Interessen, Hobbys, Lebenserfahrungen und persönlichen Meilensteine zu teilen. Eine private Website ermöglicht es Freunden, Familie und Bekannten, einen umfassenden Einblick in dein Leben zu bekommen, selbst wenn sie geografisch entfernt sind. Durch die Präsentation von Fotos, Geschichten und persönlichen Gedanken schaffst du eine Plattform, auf der du deine Identität online reflektieren und mit anderen teilen kannst.Die Gestaltung einer persönlichen Website dient als digitales Schaufenster, um sich auf persönlicher Ebene vorzustellen. Hier hast du die Möglichkeit, deine Interessen, Hobbys, Lebenserfahrungen und persönlichen Meilensteine zu teilen. Eine private Website ermöglicht es Freunden, Familie und Bekannten, einen umfassenden Einblick in dein Leben zu bekommen, selbst wenn sie geografisch entfernt sind. Durch die Präsentation von Fotos, Geschichten und persönlichen Gedanken schaffst du eine Plattform, auf der du deine Identität online reflektieren und mit anderen teilen kannst.",
+    "type": "web",
+    "link":"https://golden-portfolio.de/",
+    "git":"https://github.com/GoldenToro/portfolio",
+    "show": true
+  }
+]

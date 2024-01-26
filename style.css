@@ -78,7 +78,7 @@ body {
 
 }
 
-#card-container::-webkit-scrollbar {
+.no-scrollbar::-webkit-scrollbar {
     display: none;  /* Safari and Chrome */
 }
 
@@ -103,53 +103,149 @@ body {
 
     z-index: 10;
 
-    cursor: pointer;
 
 }
 
-.card:hover  {
-    box-shadow: 0px 0px 10px 2px rgba(245, 225, 122, 0.73);
-}
-
-.card-active {
-    box-shadow: 0px 0px 10px 2px rgba(245, 225, 122, 0.73);
-}
 
 
 .card > .side {
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden;
     border-radius: inherit;
+    backface-visibility: hidden;
+    z-index: 10;
 
 }
 
 .card > .front {
-    background: grey;
     transform: rotateY(0deg);
+    cursor: pointer;
 
 }
+
 .card > .back {
-    background: purple;
     transform: rotateY(180deg);
 
 }
 
 .side > .title {
-    position: absolute;
-    width: 90%;
+    width: 91%;
     font-size: 3rem;
 
-    padding: 10px 20px;
+    padding: 10px 20px 30px;
 
     text-align: center;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
 
+    border-radius: 30px 30px 0 0;
+
 }
 
+
+.front > .title {
+    position: absolute;
+    background: linear-gradient(rgba(0,0,0,0.5)  60%, rgba(0,0,0,0.0));
+
+}
+
+.back > .title {
+    padding: 10px 20px 0px;
+}
+
+.card > .background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+
+    background-image: url("pics/gg-main.png");
+    background-size: cover;
+    z-index: 9;
+    transition: background-position 1s ease-in-out;
+}
+
+
+
+/*
+
+  Card Content
+
+*/
+.back {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    background: rgba(0,0,0,0.8) ;
+
+}
+
+.back > .statusbar {
+
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    padding: 15px;
+}
+.back > .statusbar > .status{
+    font-size: 1.5rem;
+    width: 30%;
+    text-align: center;
+}
+.back > .statusbar > .tags{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 5px;
+}
+
+.tags > div{
+    color: black;
+    background-color: white;
+    border-radius: 15px;
+    padding: 5px;
+    text-align: center;
+}
+
+.back > .text {
+
+    position: relative;
+    border-radius:  0 0 30px 30px;
+    padding: 15px;
+    max-height: 50%;
+    height: auto;
+    overflow-y: auto;
+    text-align: justify;
+
+}
+
+.back > .links {
+
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    padding: 15px;
+}
+
+.back > .links > a{
+
+    color: white;
+    font-size: 1.3rem;
+}
+
+.back > .bigFlex {
+
+    position: relative;
+    flex-grow: 1;
+
+}
 
 
 
@@ -165,11 +261,36 @@ body {
     transform: rotateY(180deg);
 }
 
+
+.card:hover  {
+    box-shadow: 0px 0px 10px 2px rgba(245, 225, 122, 0.73);
+}
+.card:hover > .background  {
+    transition: all 2s ease;
+    background-position: 100% 0;
+}
+
+.card-active {
+    box-shadow: 0px 0px 10px 2px rgba(245, 225, 122, 0.73);
+}
+
+.card-active > .background  {
+    transition: all 2s ease;
+    background-position: 100% 0;
+    filter: grayscale(1);
+ }
+
 .wait{
-    transition: transform 1s ease;
+    transition: transform 1s ease, background-position 2s ease;
     box-shadow: 0px 0px 10px 2px rgba(245, 225, 122, 0.73);
     pointer-events: none;
 }
+
+
+.wait > .background  {
+  background-position: 100% 0;
+}
+
 
 
 
@@ -201,7 +322,6 @@ body {
   backdrop-filter: blur(50vh);
 }
 
-
 /*
 
   Mobile Stuff
@@ -210,6 +330,6 @@ body {
 
 @media only screen and (max-width: 600px) {
   #card-container {
-    width: 90vw;
+    width: 80vw;
   }
 }

@@ -61,6 +61,7 @@ cards
      removeStyle($(this));
      $(this).toggleClass("card-turning");
 
+
      $(this).addClass("wait");
 
 
