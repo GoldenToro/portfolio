@@ -1,0 +1,58 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <!--thanks hyperplexed for the background effect https://codepen.io/Hyperplexed/pen/KKBjvbG -->
+    <div id="blob"></div>
+    <div id="blur"></div>
+
+    <div id="container">
+
+        <div id="headline">
+            <h1 id="this">PORTFOLIO</h1>
+            <h6 id="byWho">Max Göldner</h6>
+        </div>
+
+
+        <div id="card-container">
+
+            <div class="card">
+                <div class="side front">
+                    <div class="title">Test</div>
+                    <iframe src="https://golden-ghost.com/" name="iframe" id="iframe" scrolling="yes" frameborder="0" marginheight="0px" marginwidth="0px" height="600" width="400">
+                    </iframe>
+                </div>
+                <div class="side back">
+                    <div class="title">Test</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <template id="card">
+        <div class="card">
+            <div class="side front">
+                <div class="title"></div>
+
+            </div>
+            <div class="side back">
+                <div class="title"></div>
+
+            </div>
+        </div>
+    </template>
+
+    <script src="data.js"></script>
+    <script src="effects.js"></script>
+</body>
+</html>

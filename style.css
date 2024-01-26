@@ -1,0 +1,215 @@
+:root {
+  --color1: rgb(245, 225, 122);
+  --color2: rgb(255, 255, 255);
+}
+
+
+html {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+}
+
+body {
+    background-color: rgb(0, 0, 0);
+    margin: 0px;
+    font-family: gotham rounded,sans-serif;
+    color: white;
+  }
+
+#this {
+    user-select: none;
+    font-size: clamp(3rem, 10vw, 10rem);
+    margin: clamp(1rem, 2vw, 2rem) 0 -1rem;
+}
+
+#byWho {
+      text-align: right;
+    font-size: clamp(3rem, 1vw, 10rem);
+    margin: -1rem 0 1rem;
+}
+
+
+#container {
+
+    position: absolute;
+
+    height: 100%;
+    width: 100%;
+
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+
+}
+
+#container > #headline {
+    width: fit-content;
+    user-select: none;
+}
+
+#card-container {
+
+    position: relative;
+
+    margin: 0% 0 0%;
+
+    height: fit-content;
+
+    width: calc(60vw - 2vw);
+    min-width: 290px;
+    max-width: 933px;
+    padding: 2vh 5vw;
+    
+    gap: 0 5%;
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+
+    perspective: 2000px;
+    z-index: 1;
+
+    overflow-y: scroll;
+
+}
+
+#card-container::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+}
+
+.card {
+    position: relative;
+
+    flex: 2 3;
+
+    margin: 0 0 50px;
+    min-width: 290px;
+    max-width: 450px;
+
+    aspect-ratio: 2 / 3;
+    transform: rotateX(0deg) rotateY(0deg);
+
+    border-radius: 30px;
+
+    transition: transform 0.5s ease-in-out, box-shadow 0.2s ease;
+
+    transform-origin: center;
+    transform-style: preserve-3d;
+
+    z-index: 10;
+
+    cursor: pointer;
+
+}
+
+.card:hover  {
+    box-shadow: 0px 0px 10px 2px rgba(245, 225, 122, 0.73);
+}
+
+.card-active {
+    box-shadow: 0px 0px 10px 2px rgba(245, 225, 122, 0.73);
+}
+
+
+.card > .side {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: inherit;
+
+}
+
+.card > .front {
+    background: grey;
+    transform: rotateY(0deg);
+
+}
+.card > .back {
+    background: purple;
+    transform: rotateY(180deg);
+
+}
+
+.side > .title {
+    position: absolute;
+    width: 90%;
+    font-size: 3rem;
+
+    padding: 10px 20px;
+
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+}
+
+
+
+
+/*
+
+  Card Turning Effect
+
+*/
+
+
+.card-turning{
+    transition: transform 1s;
+    transform: rotateY(180deg);
+}
+
+.wait{
+    transition: transform 1s ease;
+    box-shadow: 0px 0px 10px 2px rgba(245, 225, 122, 0.73);
+    pointer-events: none;
+}
+
+
+
+/*
+
+  BackgroundEffect
+
+*/
+
+#blob {
+  height: 70vw;
+  aspect-ratio: 1;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: linear-gradient(to right,var(--color1), var(--color1));
+  animation: rotate 15s infinite;
+  opacity: 0.4;
+  z-index: -2;
+}
+
+#blur {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+  backdrop-filter: blur(50vh);
+}
+
+
+/*
+
+  Mobile Stuff
+
+*/
+
+@media only screen and (max-width: 600px) {
+  #card-container {
+    width: 90vw;
+  }
+}
