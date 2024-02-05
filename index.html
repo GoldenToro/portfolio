@@ -4,51 +4,90 @@
     <meta charset="UTF-8">
     <title>Portfolio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 </head>
 
 <body>
-    <!--thanks hyperplexed for the background effect https://codepen.io/Hyperplexed/pen/KKBjvbG -->
-    <div id="blob"></div>
-    <div id="blur"></div>
+<!--thanks hyperplexed for the background effect https://codepen.io/Hyperplexed/pen/KKBjvbG -->
+<div id="blob"></div>
+<div id="blur"></div>
 
-    <div id="container">
+<div id="container">
 
-        <div id="headline">
-            <h1 id="this">PORTFOLIO</h1>
-            <h6 id="byWho">Max Göldner</h6>
-        </div>
-
-
-        <div id="card-container" class="no-scrollbar">
-
-        </div>
+    <div id="headline">
+        <h1 id="this">PORTFOLIO</h1>
+        <h6 id="byWho">Max Göldner</h6>
     </div>
 
-    <template id="card">
-        <div class="card">
-            <div class="side front">
-                <div class="title"></div>
-            </div>
-            <div class="side back">
+    <div id="card-container" class="no-scrollbar">
 
-                <div class="title"></div>
-                <div class="statusbar">
-                    <div class="status"></div>
-                    <div class="tags"></div>
-                </div>
-                <div class="bigFlex"></div>
-                <div class="links"></div>
-                <div class="text no-scrollbar"></div>
-            </div>
-            <div class="background"></div>
+        <div id="small-cards" class="card-container no-scrollbar"></div>
+        <div id="big-cards" class="card-container no-scrollbar"></div>
+    </div>
+
+</div>
+
+
+<template id="card">
+    <div class="card ">
+        <div class="side front">
+            <div class="title"></div>
         </div>
-    </template>
+        <div class="side back test">
 
-    <script src="data.js"></script>
-    <script src="effects.js"></script>
+            <div class="more">
+                <svg fill="none" stroke="currentColor" class="checkmark" xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 52 52">
+                    <path class="checkmark__check" d="M21 16 16 16 16 21 M16 16 24 24
+							M21 16 16 16 16 21 M16 16 24 24
+							M31 16 36 16 36 21 M36 16 28 24
+							M31 36 36 36 36 31 M36 36 28 28
+							M21 36 16 36 16 31 M16 36 24 28
+		"/>
+                </svg>
+            </div>
+            <div class="title"></div>
+            <div class="exit">
+                <svg fill="none" stroke="currentColor" class="checkmark" xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 52 52">
+                    <path class="checkmark__check" d="M16 16 36 36 M36 16 16 36"/>
+                </svg>
+            </div>
+            <div class="statusbar">
+                <div class="status"></div>
+                <div class="tags"></div>
+            </div>
+            <div class="bigFlex"></div>
+            <div class="slider">
+                <div class="slide_group">
+                    <div class="slider-button prev unavailable">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"
+                                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </div>
+                    <div class="slider-button next">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"
+                                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="links"></div>
+            <div class="bigFlex"></div>
+            <div class="text no-scrollbar"></div>
+            <div class="textBlurContainer"></div>
+        </div>
+        <div class="background"></div>
+    </div>
+</template>
+
+<script src="data.js"></script>
+<script src="effects.js"></script>
 </body>
 </html>

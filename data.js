@@ -1,4 +1,5 @@
-const tbody = document.querySelector("#card-container");
+const small = document.querySelector("#small-cards");
+const big = document.querySelector("#big-cards");
 const template = document.querySelector("#card");
 
 var data = [];
@@ -14,6 +15,51 @@ $.getJSON("data.json", function(json) {
 });
 
 
+function fillCard(card, obj, name) {
+
+
+      $(card).find('.card').attr("id",`${name}-${obj["id"]}`);
+      $(card).find('.title').text(obj["title"]);
+
+      $(card).find('.status').html(`Status:<br><div>${obj["status"]}</div>`);
+
+      for (var j = 0; j < obj["tags"].length; j++){
+        var tag = obj["tags"][j];
+        $(card).find('.tags').append(`<div>${tag}</div>`);
+
+      }
+
+      if ( obj["pics"].length < 2) {
+        $(card).find('.slider-button').addClass( "unavailable" );
+      }
+
+      for (var j = 0; j < obj["pics"].length; j++){
+        var tag = obj["pics"][j];
+        var extraStyle = "";
+        if (j != 0 ) {
+            extraStyle = "right";
+        }
+        $(card).find('.slide_group').append(`<div class="slide ${extraStyle}" title="${tag["text"]}" style="background-image: url(${obj["pics"][j]["path"]});"></div>`);
+
+      }
+
+      $(card).find('.text').html(obj["text"]);
+      $(card).find('.background').css("background-image",`url(${obj["pics"][0]["path"]})`);
+
+
+        if (obj.hasOwnProperty("link")) {
+            $(card).find('.links').append( `<a target="_blank" rel="noopener noreferrer" href="${obj["link"]}">Zur Website</a>`);
+        }
+        if (obj.hasOwnProperty("git")) {
+            $(card).find('.links').append( `<a target="_blank" rel="noopener noreferrer" href="${obj["git"]}">GitHub</a>`);
+        }
+
+     return card;
+}
+
+
+
+
 function showProjects(projects) {
 
     for (var i = 0; i < projects.length; i++){
@@ -23,29 +69,14 @@ function showProjects(projects) {
 
           // Clone the new row and insert it into the table
           var clone = template.content.cloneNode(true);
-          $(clone).find('.title').text(obj["title"]);
+          var card = fillCard(clone, obj, "small");
+          small.appendChild(clone);
 
-          $(clone).find('.status').html(`Status:<br>${obj["status"]}`);
-
-          for (var j = 0; j < obj["tags"].length; j++){
-            var tag = obj["tags"][j];
-            $(clone).find('.tags').append(`<div>${tag}</div>`);
-
-          }
-
-          $(clone).find('.text').html(obj["text"]);
-          $(clone).find('.background').css("background-image",`url(${obj["pic"]})`);
+          clone = template.content.cloneNode(true);
+          card = fillCard(clone, obj, "big");
+          big.appendChild(clone);
 
 
-            if (obj.hasOwnProperty("link")) {
-                $(clone).find('.links').append( `<a href="${obj["link"]}">Probiere es aus</a>`);
-            }
-            if (obj.hasOwnProperty("git")) {
-                $(clone).find('.links').append( `<a href="${obj["git"]}">GitHub</a>`);
-            }
-
-
-          tbody.appendChild(clone);
 
       }
 

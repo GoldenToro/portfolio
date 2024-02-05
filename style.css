@@ -38,9 +38,6 @@ body {
     width: 100%;
 
 
-    left: 50%;
-    transform: translateX(-50%);
-
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -54,22 +51,13 @@ body {
 
 #card-container {
 
-    position: relative;
+    position: absolute;
+    top: 21vh;
 
     margin: 0% 0 0%;
 
-    height: fit-content;
-
-    width: calc(60vw - 2vw);
-    min-width: 290px;
-    max-width: 933px;
-    padding: 2vh 5vw;
-    
-    gap: 0 5%;
-
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
+    height: 79vh;
+    width: 100vw;
 
     perspective: 2000px;
     z-index: 1;
@@ -81,6 +69,47 @@ body {
 .no-scrollbar::-webkit-scrollbar {
     display: none;  /* Safari and Chrome */
 }
+
+.card-container {
+
+    position: absolute;
+
+    margin: 0vh 0 0%;
+
+    height: 86%;
+    width: 56vw;
+    max-width: 933px;
+    padding: 5vh 5vw 3%;
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    gap: 0 5%;
+
+    perspective: 2000px;
+    z-index: 1;
+
+    overflow-y: scroll;
+}
+
+#small-cards {
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+
+}
+#big-cards {
+
+    pointer-events: none;
+
+}
+
+/*
+
+  Cards
+
+*/
 
 .card {
     position: relative;
@@ -96,7 +125,7 @@ body {
 
     border-radius: 30px;
 
-    transition: transform 0.5s ease-in-out, box-shadow 0.2s ease;
+    transition: all 0.5s ease-in-out;
 
     transform-origin: center;
     transform-style: preserve-3d;
@@ -110,30 +139,38 @@ body {
 
 .card > .side {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 100.1%;
+    height: 100.1%;
     border-radius: inherit;
     backface-visibility: hidden;
+    background: rgba(0,0,0,0.9) ;
     z-index: 10;
 
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .card > .front {
     transform: rotateY(0deg);
     cursor: pointer;
 
+    .title {
+
+    white-space: break-spaces;
+    }
 }
 
 .card > .back {
     transform: rotateY(180deg);
-
 }
 
 .side > .title {
-    width: 91%;
-    font-size: 3rem;
+    min-height: 3rem;
 
-    padding: 10px 20px 30px;
+    width: calc(100% - 130px);
+    font-size: 3rem;
+    padding: 10px 65px 0px;
 
     text-align: center;
     white-space: nowrap;
@@ -144,27 +181,40 @@ body {
 
 }
 
+.side > .more {
 
-.front > .title {
     position: absolute;
-    background: linear-gradient(rgba(0,0,0,0.5)  60%, rgba(0,0,0,0.0));
+    height: 10%;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+    left: 0%;
+    top: 0;
+
+}
+.side > .exit {
+
+    position: absolute;
+    height: 10%;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+    right: 0%;
+    top: 0;
 
 }
 
-.back > .title {
-    padding: 10px 20px 0px;
-}
 
 .card > .background {
     position: absolute;
-    width: 100%;
+    width: calc(100% - 2px);
+    margin: 0 1px;
     height: 100%;
-    border-radius: inherit;
+    border-radius: 31px;
 
-    background-image: url("pics/gg-main.png");
     background-size: cover;
     z-index: 9;
-    transition: background-position 1s ease-in-out;
+    transition: all 2s ease;
+    background-position: 50% 0;
+
 }
 
 
@@ -174,13 +224,6 @@ body {
   Card Content
 
 */
-.back {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    background: rgba(0,0,0,0.8) ;
-
-}
 
 .back > .statusbar {
 
@@ -191,11 +234,13 @@ body {
 
     padding: 15px;
 }
+
 .back > .statusbar > .status{
     font-size: 1.5rem;
     width: 30%;
     text-align: center;
 }
+
 .back > .statusbar > .tags{
     position: relative;
     display: flex;
@@ -204,12 +249,15 @@ body {
     gap: 5px;
 }
 
-.tags > div{
-    color: black;
-    background-color: white;
+.tags > div, .status > div{
+    color: white;
+    font-size: 1rem;
     border-radius: 15px;
+    border: 2px solid var(--color1);
     padding: 5px;
     text-align: center;
+    left: 50%;
+    transform: translateX(-0%);
 }
 
 .back > .text {
@@ -229,13 +277,14 @@ body {
     position: relative;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
 
     padding: 15px;
 }
 
 .back > .links > a{
 
+    text-decoration-color: var(--color1);
     color: white;
     font-size: 1.3rem;
 }
@@ -246,7 +295,164 @@ body {
     flex-grow: 1;
 
 }
+.back > .textBlurContainer {
 
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 15px;
+
+}
+
+/*
+
+    Big Card
+
+*/
+
+#big-cards > .card {
+
+    position: absolute;
+    transition: all 0s ease-in-out;
+
+    background: rgba(0,0,0,1);
+
+    visibility: hidden;
+    box-shadow: 0px 0px 10px 2px rgba(245, 225, 122, 0.73);
+
+     .back {
+     transform: rotateY(0deg);
+
+    }
+     .background {
+        visibility: hidden;
+
+    }
+     .front {
+        visibility: hidden;
+
+    }
+
+}
+
+#big-cards > .card.active {
+
+
+    visibility: visible;
+    pointer-events: all;
+    transition: all 1s ease-in-out;
+
+    top: 1vh !important;
+    left: 5vw !important;
+
+    width: max(933px, 58vw) !important;
+    max-width: min(933px, 58vw) !important;
+    height: calc(70vh - 10px) !important;
+
+
+
+}
+
+.hide {
+
+    transition: all 0s;
+    visibility: hidden;
+
+}
+.overflow {
+    pointer-events: none;
+    overflow-y: hidden !important;
+    overflow-x: hidden !important;
+
+}
+
+/*
+
+  Image Slider
+
+*/
+
+.slider {
+    min-height: 30%;
+
+}
+
+.slide_group {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+
+}
+
+.slide_group > .slider-button {
+    position: absolute;
+    transition: all 0.5s ease-in-out;
+    color: var(--color1);
+    top: 0;
+    height: 100%;
+    width: 10%;
+    z-index: 11;
+    cursor: pointer;
+
+    svg {
+        position: absolute;
+        top: 40%;
+    }
+}
+
+.slider-button.unavailable {
+    cursor: default;
+    color: grey;
+}
+
+.slide_group > .slider-button.prev{
+    left: 2%;
+
+    svg {
+        transform: rotate(-180deg);
+    }
+
+}
+
+.slide_group > .slider-button.next{
+    left: 88%;
+
+}
+
+.slide_group > .slide {
+    position: absolute;
+
+    transition: all 0.5s ease-in-out;
+
+
+    scale: 1;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position:center;
+}
+
+.slide_group > .slide > .content{
+    position: absolute;
+    bottom: 0;
+}
+
+.slide.right {
+
+    scale: 0.1;
+    background-position: 500% center;
+    color: rgba(0,0,0,0);
+
+}
+.slide.left {
+
+    scale: 0.1;
+    background-position: -500% center;
+    color: rgba(0,0,0,0);
+
+}
 
 
 /*
@@ -262,35 +468,34 @@ body {
 }
 
 
-.card:hover  {
+.card:hover {
     box-shadow: 0px 0px 10px 2px rgba(245, 225, 122, 0.73);
 }
 .card:hover > .background  {
     transition: all 2s ease;
-    background-position: 100% 0;
 }
 
-.card-active {
+.card-active > .back{
     box-shadow: 0px 0px 10px 2px rgba(245, 225, 122, 0.73);
 }
 
 .card-active > .background  {
-    transition: all 2s ease;
-    background-position: 100% 0;
-    filter: grayscale(1);
+    filter: opacity(0);
  }
 
 .wait{
     transition: transform 1s ease, background-position 2s ease;
-    box-shadow: 0px 0px 10px 2px rgba(245, 225, 122, 0.73);
     pointer-events: none;
 }
 
-
-.wait > .background  {
-  background-position: 100% 0;
+.wait5s{
+    transition: all 0.5s ease-in-out !important;
+    pointer-events: none;
 }
 
+.wait > .back {
+    box-shadow: 0px 0px 10px 2px rgba(245, 225, 122, 0.73);
+}
 
 
 
@@ -322,6 +527,7 @@ body {
   backdrop-filter: blur(50vh);
 }
 
+
 /*
 
   Mobile Stuff
@@ -329,11 +535,10 @@ body {
 */
 
 @media only screen and (max-width: 600px) {
-  #card-container {
+  #small-cards {
     width: 80vw;
-  }#card-container {
-
+    padding: 5vh 10vw;
        gap: 0 7%;
+  }
 
-   }
 }
