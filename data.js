@@ -72,9 +72,6 @@ function showProjects(projects) {
           var card = fillCard(clone, obj, "small");
           small.appendChild(clone);
 
-          clone = template.content.cloneNode(true);
-          card = fillCard(clone, obj, "big");
-          big.appendChild(clone);
 
 
 
