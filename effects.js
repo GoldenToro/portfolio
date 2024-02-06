@@ -139,24 +139,34 @@ function toggleFullSize(card) {
 
     var container = card.closest('.card-container');
 
+    var sourcePosition = card.position();
+    var sourceWidth = card.width();
+    var sourceHeight = card.height();
+
+    console.log(sourcePosition)
+
     $(".card").toggleClass("big");
+
+    card.toggleClass("absolute");
 
     setTimeout(() => {
         card.nextAll().toggleClass("right")
         card.prevAll().toggleClass("left")
     }, 100);
 
+    card.css({
+      top: sourcePosition.top + 'px',
+      left: sourcePosition.left + 'px',
+      width: sourceWidth + 'px',
+      height: sourceHeight + 'px'
+    });
 
-    card.toggleClass("absolute");
 
-    $(".card-container").animate({
-        scrollTop: container.offset().top
-    }, 800);
 
     $(".card").addClass("wait");
     setTimeout(() => {
         $(".card-container").animate({
-            scrollTop: card.offset().top - 20
+            scrollTop: card.offset().top - (container.offset().top + 20)
         }, 800);
     }, 900);
     setTimeout(() => {

@@ -263,7 +263,7 @@ body {
 .card.big {
 
     position: absolute;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out, height 2s, width 2s;
     top: 5%;
     left: 0%;
     min-width: 84%;
@@ -287,9 +287,11 @@ body {
 
 }
 
-.absolute {
+.card.absolute {
 
     position: absolute;
+    transition: all 1s ease-in-out;
+
 }
 
 
