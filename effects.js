@@ -21,7 +21,7 @@ function updateCardEffects() {
       .on("mousemove touchmove", function(e) {
 
         var card = $(this);
-        if (!card.hasClass('wait') && !card.hasClass('card-active')) {
+        if (!(card.hasClass('wait') || card.hasClass('card-active') || card.hasClass('big') )) {
 
 
             // normalise touch/mouse
@@ -61,6 +61,7 @@ function updateCardEffects() {
       .on("click",function(){
 
         var card = $(this);
+
         if (!card.hasClass('card-active')) {
             turnAround(card);
         }
@@ -69,9 +70,11 @@ function updateCardEffects() {
 
     $('.exit').on("click",function(e){
         e.stopPropagation();
-        var card = $(this.parentElement.parentElement);
+        var card = $(this).closest('.card');
+
+
         turnAround(card);
-        card.find(".back").removeClass("bigger");
+
     });
 
     $('.more').on("click",function(e){
@@ -79,9 +82,7 @@ function updateCardEffects() {
 
 
         var card = $(this).closest('.card');
-        console.log("test");
-        console.log(card);
-
+        toggleFullSize(card)
 
     });
 
@@ -133,6 +134,35 @@ function updateCardEffects() {
 }
 
 
+
+function toggleFullSize(card) {
+
+    var container = card.closest('.card-container');
+
+    $(".card").toggleClass("big");
+
+    setTimeout(() => {
+        card.nextAll().toggleClass("right")
+        card.prevAll().toggleClass("left")
+    }, 100);
+
+
+    card.toggleClass("absolute");
+
+    $(".card-container").animate({
+        scrollTop: container.offset().top
+    }, 800);
+
+    $(".card").addClass("wait");
+    setTimeout(() => {
+        $(".card-container").animate({
+            scrollTop: card.offset().top - 20
+        }, 800);
+    }, 900);
+    setTimeout(() => {
+        $(".card").removeClass("wait");
+    }, 900);
+}
 
 function turnAround(div) {
 

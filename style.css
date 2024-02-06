@@ -17,19 +17,6 @@ body {
     color: white;
   }
 
-#this {
-    user-select: none;
-    font-size: clamp(3rem, 10vw, 10rem);
-    margin: clamp(1rem, 2vw, 2rem) 0 -1rem;
-}
-
-#byWho {
-      text-align: right;
-    font-size: clamp(3rem, 1vw, 10rem);
-    margin: -1rem 0 1rem;
-}
-
-
 #container {
 
     position: absolute;
@@ -42,27 +29,38 @@ body {
     flex-flow: column;
     align-items: center;
 
+    #headline {
+        width: fit-content;
+        user-select: none;
+
+
+        #this {
+            user-select: none;
+            font-size: clamp(3rem, 10vw, 10rem);
+            margin: clamp(1rem, 2vw, 2rem) 0 -1rem;
+        }
+
+        #byWho {
+              text-align: right;
+            font-size: clamp(3rem, 1vw, 10rem);
+            margin: -1rem 0 1rem;
+        }
+
+
+    }
+
 }
 
-#container > #headline {
-    width: fit-content;
-    user-select: none;
-}
 
-#card-container {
+.card-container {
 
-    position: absolute;
-    top: 21vh;
+    position: relative;
 
     margin: 0% 0 0%;
-    padding: 5vh 5vw 3%;
+    padding: 5vh 5vw 2vh;
 
-    height: 79vh;
     width: 56vw;
     max-width: 933px;
-
-    left: 50%;
-    transform: translateX(-50%);
 
     gap: 0 5%;
 
@@ -71,10 +69,13 @@ body {
 
     overflow-y: scroll;
 
+    flex-grow: 2;
+
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
 }
+
 
 .no-scrollbar::-webkit-scrollbar {
     display: none;  /* Safari and Chrome */
@@ -101,7 +102,7 @@ body {
 
     border-radius: 30px;
 
-    transition: all 0.5s ease-in-out;
+    transition: all 1s ease-in-out;
 
     transform-origin: center;
     transform-style: preserve-3d;
@@ -259,6 +260,38 @@ body {
     }
 }
 
+.card.big {
+
+    position: absolute;
+    transition: all 0.5s ease-in-out;
+    top: 5%;
+    left: 0%;
+    min-width: 84%;
+    max-height: 90%;
+    margin: 0 8%;
+}
+
+.card.big.left {
+
+    left: -100%;
+    scale: 0.9;
+    z-index: 2;
+
+}
+
+.card.big.right {
+
+    left: 100%;
+    scale: 0.9;
+    z-index: 2;
+
+}
+
+.absolute {
+
+    position: absolute;
+}
+
 
 .bigFlex {
 
@@ -383,7 +416,7 @@ body {
  }
 
 .wait{
-    transition: transform 1s ease, background-position 2s ease;
+    transition: all 1s ease, background-position 2s ease;
     pointer-events: none;
 }
 

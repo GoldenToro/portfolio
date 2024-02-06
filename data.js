@@ -1,4 +1,4 @@
-const small = document.querySelector("#card-container");
+const small = document.querySelector(".card-container");
 const template = document.querySelector("#card");
 
 var data = [];
