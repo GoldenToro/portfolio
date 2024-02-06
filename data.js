@@ -1,5 +1,4 @@
-const small = document.querySelector("#small-cards");
-const big = document.querySelector("#big-cards");
+const small = document.querySelector("#card-container");
 const template = document.querySelector("#card");
 
 var data = [];
@@ -39,7 +38,7 @@ function fillCard(card, obj, name) {
         if (j != 0 ) {
             extraStyle = "right";
         }
-        $(card).find('.slide_group').append(`<div class="slide ${extraStyle}" title="${tag["text"]}" style="background-image: url(${obj["pics"][j]["path"]});"></div>`);
+        $(card).find('.slider').append(`<div class="slide ${extraStyle}" title="${tag["text"]}" style="background-image: url(${obj["pics"][j]["path"]});"></div>`);
 
       }
 

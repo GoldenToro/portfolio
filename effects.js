@@ -15,7 +15,7 @@ window.onpointermove = event => {
 function updateCardEffects() {
 
     var x;
-    var cards = $("#small-cards .card");
+    var cards = $(".card");
 
     cards
       .on("mousemove touchmove", function(e) {
@@ -78,52 +78,9 @@ function updateCardEffects() {
         e.stopPropagation();
 
 
-        var small_card = $("#"+$(this).closest('.card').attr('id').replace('big', 'small'));
-        var big_card = $("#"+$(this).closest('.card').attr('id').replace('small', 'big'));
-
-
-        var sourcePosition = small_card.position();
-        var sourceWidth = small_card.width();
-        var sourceHeight = small_card.height();
-
-        console.log(sourcePosition.top);
-
-
-        big_card.css({
-          top: sourcePosition.top + 'px',
-          left: sourcePosition.left + 'px',
-          width: sourceWidth + 'px',
-          height: sourceHeight + 'px'
-        });
-
-
-
-        setTimeout(() => {
-
-            if (big_card.hasClass("active")) {
-
-                big_card.removeClass("active");
-                big_card.addClass("wait5s");
-
-                setTimeout(() => {
-                    small_card.removeClass("hide");
-                    big_card.removeClass("wait5s");
-
-                    setTimeout(() => {
-                        $("#small-cards").removeClass("overflow");
-                        $("#big-cards").removeClass("overflow");
-                    }, 250);
-                }, 500);
-            } else {
-
-                big_card.addClass("active");
-                small_card.addClass("hide");
-                $("#small-cards").addClass("overflow");
-                $("#big-cards").addClass("overflow");
-
-            }
-
-        }, 50);
+        var card = $(this).closest('.card');
+        console.log("test");
+        console.log(card);
 
 
     });
@@ -132,7 +89,7 @@ function updateCardEffects() {
 
         e.stopPropagation();
 
-        var card = $(this.parentElement.parentElement.parentElement.parentElement);
+        var card = $(this).closest('.card');
         var direction = $(this).hasClass("next") ? "right" : "left";
         //console.log("clicked")
         //console.log(card)
