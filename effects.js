@@ -79,6 +79,13 @@ function updateCardEffects() {
 
         if (!container.hasClass('active')) {
             turnAround(card);
+        } else {
+
+            toggleFullSize(card);
+            setTimeout(() => {
+                turnAround(card);
+            }, 1800);
+
         }
 
     });

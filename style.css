@@ -496,10 +496,22 @@ body {
 */
 
 @media only screen and (max-width: 600px) {
-  #card-container {
+  .card-container {
     width: 80vw;
     padding: 5vh 10vw;
        gap: 0 7%;
   }
+
+    .card.left {
+
+        margin-left: -100%;
+
+    }
+
+    .card.right {
+
+        margin-left: 100%;
+
+    }
 
 }
