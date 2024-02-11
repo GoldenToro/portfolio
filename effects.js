@@ -81,10 +81,10 @@ function updateCardEffects() {
             turnAround(card);
         } else {
 
-            toggleFullSize(card);
+            turnAround(card);
             setTimeout(() => {
-                turnAround(card);
-            }, 1800);
+                toggleFullSize(card);
+            }, 500);
 
         }
 
@@ -284,7 +284,10 @@ function toggleFullSize(card) {
 
 function turnAround(div) {
 
+     if (!div.hasClass("big")) {
      removeStyle(div);
+     }
+
      div.toggleClass("card-turning");
 
 
