@@ -1,6 +1,7 @@
 /* -- Glow effect -- */
 const blob = document.getElementById("blob");
 
+var positionList = []
 var scrollBefore = 0;
 
 window.onpointermove = event => {
@@ -112,12 +113,7 @@ function updateCardEffects() {
 
     });
 
-
-
-
-
     $('.slider-button').on("click",function(e){
-
         e.stopPropagation();
 
         var card = $(this).closest('.card');
@@ -160,24 +156,70 @@ function updateCardEffects() {
 
     });
 
-
 }
 
+$('.project-button').on("click" ,function(e){
 
 
-function toggleFullSize(div) {
+    var container = $("#container")
+    var direction = $(this).hasClass("next") ? "right" : "left";
 
-    var card = div;
+    console.log("slide"+direction)
+
+
+    var active_slide = container.find(".card").not(".left").not(".right")
+
+    var next_slide = active_slide.next().filter(".right")
+    var prev_slide = active_slide.prev().filter(".left")
+
+    if (direction == "right")  {
+        if (next_slide.length > 0) {
+            nextPosition =  positionList.find(obj => obj.id === next_slide.attr("id"))
+            scrollBefore =  nextPosition ? nextPosition.position.top : scrollBefore;
+            active_slide.addClass("left up");
+            active_slide.removeClass("big card-turning card-active");
+            next_slide.addClass("big card-turning card-active");
+            next_slide.removeClass("right up");
+            container.find(".project-button.prev").removeClass("unavailable");
+        }
+
+        if (next_slide.next().filter(".right").length < 1) {
+            container.find(".project-button.next").addClass("unavailable");
+        }
+
+
+    } else {
+        if (prev_slide.length > 0) {
+            nextPosition =  positionList.find(obj => obj.id === prev_slide.attr("id"))
+            scrollBefore =  nextPosition ? nextPosition.position.top : scrollBefore;
+            active_slide.addClass("right up");
+            active_slide.removeClass("big card-turning card-active");
+            prev_slide.addClass("big card-turning card-active");
+            prev_slide.removeClass("left up");
+            container.find(".project-button.next").removeClass("unavailable");
+        }
+
+        if (prev_slide.prev().filter(".left").length < 1) {
+            container.find(".project-button.prev").addClass("unavailable");
+        }
+
+    }
+
+});
+
+function toggleFullSize(card) {
 
     var timeOut = 900;
 
-    if (div.hasClass("big")) {
+    if (card.hasClass("big")) {
         timeOut = 1800;
     }
 
-    if (!div.hasClass('active')) {
+    if (!card.hasClass('active')) {
 
-        $(".card").addClass('active');
+
+
+        card.addClass('active');
 
         var container = card.closest('.card-container');
 
@@ -188,6 +230,7 @@ function toggleFullSize(div) {
 
 
         if (isFullsize) {
+            $(".project-button").addClass("hide").removeClass("unavailable");
 
             $($cards).each(function(index) {
 
@@ -227,8 +270,19 @@ function toggleFullSize(div) {
 
         } else {
 
+            $(".project-button").removeClass("hide");
+
+            if ($(card).next().filter(".card").length < 1) {
+                $("body").find(".project-button.next").addClass("unavailable");
+            }
+            if ($(card).prev().filter(".card").length < 1) {
+                $("body").find(".project-button.prev").addClass("unavailable");
+            }
+
+
             scrollBefore = container.scrollTop();
-            var positionList = []
+
+            positionList = []
 
             $($cards).each(function(index) {
                var position = $(this).position(); // Get position relative to the offset parent
@@ -261,24 +315,28 @@ function toggleFullSize(div) {
                 thisCard.toggleClass("absolute");
             });
 
+            var beforeMainCard = true;
+
             $($cards).each(function(index) {
 
                 if ($(this).attr("id") == card.attr("id")) {
 
-                setTimeout(() => {
-                    $(this).addClass("big");
-                    container.addClass("big");
-                    container.addClass("active");
+                    setTimeout(() => {
+                        $(this).addClass("big");
+                        container.addClass("big");
+                        container.addClass("active");
 
-                    container.animate({
-                        scrollTop: 0
-                    }, 500);
+                        container.animate({
+                            scrollTop: 0
+                        }, 500);
 
-                }, 100);
+                    }, 100);
+
+                    beforeMainCard = false;
 
                 } else {
 
-                    var className = (index % 2 === 0) ? 'left' : 'right';
+                    var className = (beforeMainCard) ? 'left' : 'right';
 
                     // Add the determined class to the current div
                     $(this).addClass(className);
