@@ -265,6 +265,13 @@ body {
                     transition: all  0.5s;
                 }
             }
+            .slider-button.mobile {
+                background-color: rgba(0,0,0,0);
+                top: 0;
+                width: 15%;
+                height: 100%;
+
+            }
 
             .slider-button.prev{
                 left: 2%;
@@ -282,7 +289,7 @@ body {
             }
 
              .slider-button.next{
-                left: 88%;
+                right: 2%;
             }
 
             .slide {
@@ -462,6 +469,15 @@ body {
 
             }
 
+            .slider-button.mobile {
+                background-color: rgba(0,0,0,0);
+                top: 0;
+                width: 15%;
+                height: 100%;
+                border-radius: 0%;
+
+            }
+
             .slider-button.prev{
                 left: 5%;
                 transform: rotate(-180deg)
@@ -470,7 +486,7 @@ body {
             }
 
              .slider-button.next{
-                left: 87%;
+                right: 5%;
             }
 
             .slide {
@@ -716,15 +732,28 @@ body {
 
 @media only screen and (max-width: 700px) {
   .card-container {
-    width: 100vw;
-    padding: 5vh 0vw;
-       gap: 0 7%;
-  }
+        width: 100vw;
+        max-height: 80vh;
+        padding: 5vh 0vw 0;
+        gap: 0 7%;
+      }
+  .card-container.big {
+
+        max-height: 74vh;
+      }
+
+      .card {
+        min-width: 90vw;
+        max-width: 90vw;
+
+
+      }
 
       .card.big {
 
             min-width: 96vw;
             margin: 0 2vw;
+            font-size: small;
 
 
 

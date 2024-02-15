@@ -118,9 +118,6 @@ function updateCardEffects() {
 
         var card = $(this).closest('.card');
         var direction = $(this).hasClass("next") ? "right" : "left";
-        //console.log("clicked")
-        //console.log(card)
-        console.log(direction)
 
         var active_slide = card.find(".slide").not(".left").not(".right")
 
@@ -163,9 +160,6 @@ $('.project-button').on("click" ,function(e){
 
     var container = $("#container")
     var direction = $(this).hasClass("next") ? "right" : "left";
-
-    console.log("slide"+direction)
-
 
     var active_slide = container.find(".card").not(".left").not(".right")
 
@@ -226,13 +220,15 @@ function toggleFullSize(card) {
         var isFullsize = container.hasClass("big");
 
         var $cards = container.find(".card").toArray();
-        console.log("test")
-
 
         if (isFullsize) {
             $(".project-button").addClass("hide").removeClass("unavailable");
 
             $($cards).each(function(index) {
+
+                $(this).find(".text").animate({
+                                scrollTop: 0
+                            }, 1000);
 
                 if ($(this).attr("id") == card.attr("id")) {
 
