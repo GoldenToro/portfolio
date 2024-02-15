@@ -29,7 +29,7 @@ function fillCard(card, obj, name) {
       }
 
       if ( obj["pics"].length < 2) {
-        $(card).find('.slider-button').addClass( "unavailable" );
+        $(card).find('.slider-button').remove();
       }
 
       for (var j = 0; j < obj["pics"].length; j++){

@@ -77,45 +77,44 @@ function updateCardEffects() {
 
         var container = card.closest('.card-container');
 
-        if (!container.hasClass('active')) {
-            turnAround(card);
-        } else {
+        if (!card.hasClass('active')) {
 
-            turnAround(card);
-            setTimeout(() => {
+            if (!container.hasClass('active')) {
+                turnAround(card);
+            } else {
+
+                turnAround(card);
                 toggleFullSize(card);
-            }, 500);
+
+            }
 
         }
 
     });
 
-    $('.more').on("click",function(e){
+    $('.more, .textBlurContainer').on("click",function(e){
+        e.stopPropagation();
+
+        var card = $(this).closest('.card');
+        toggleFullSize(card);
+
+    });
+
+    $('.slide').on("click",function(e){
+
         e.stopPropagation();
 
         var card = $(this).closest('.card');
 
-        var timeOut = 900;
-
-        if (card.hasClass("big")) {
-            timeOut = 1800;
-        }
-
-        if (!card.hasClass('active')) {
-
-            $(".card").addClass('active');
-
+        if (!card.hasClass("big")) {
             toggleFullSize(card);
-
-            setTimeout(() => {
-                $(".card").removeClass('active');
-            }, timeOut);
-
         }
-
-
 
     });
+
+
+
+
 
     $('.slider-button').on("click",function(e){
 
@@ -166,126 +165,146 @@ function updateCardEffects() {
 
 
 
-function toggleFullSize(card) {
+function toggleFullSize(div) {
 
-    var container = card.closest('.card-container');
+    var card = div;
 
-    var isFullsize = container.hasClass("big");
+    var timeOut = 900;
 
-    var $cards = container.find(".card").toArray();
-    console.log("test")
-
-
-    if (isFullsize) {
-
-        $($cards).each(function(index) {
-
-            if ($(this).attr("id") == card.attr("id")) {
-
-                $(this).removeClass("big");
-                container.removeClass("big");
-
-                setTimeout(() => {
-                    container.removeClass("active");
-                }, 1800);
-
-
-            } else {
-
-                $(this).removeClass("up");
-
-                setTimeout(() => {
-                    $(this).removeClass('left');
-                    $(this).removeClass('right');
-                }, 500);
-
-            }
-
-        });
-
-        setTimeout(() => {
-
-            $($cards).each(function(index) {
-                $(this).toggleClass("absolute");
-                removeStyle($(this));
-            });
-
-
-            container.scrollTop(scrollBefore);
-        }, 1800);
-
-    } else {
-
-        scrollBefore = container.scrollTop();
-        var positionList = []
-
-        $($cards).each(function(index) {
-           var position = $(this).position(); // Get position relative to the offset parent
-           var width = $(this).width(); // Get width of the element
-           var height = $(this).height(); // Get height of the element
-
-           // Save position, width, and height data into an object
-           var elementData = {
-               id: $(this).attr("id"),
-               position: position,
-               width: width,
-               height: height
-           };
-
-           positionList.push(elementData);
-        });
-
-        positionList.forEach(function(elementData) {
-
-            thisCard = container.find("#"+elementData.id);
-
-           thisCard.css({
-              position: 'absolute',
-              top: elementData.position.top + 'px',
-              left: elementData.position.left + 'px',
-              width: elementData.width + 'px',
-              height: elementData.height + 'px'
-            });
-
-            thisCard.toggleClass("absolute");
-        });
-
-        $($cards).each(function(index) {
-
-            if ($(this).attr("id") == card.attr("id")) {
-
-            setTimeout(() => {
-                $(this).addClass("big");
-                container.addClass("big");
-                container.addClass("active");
-            }, 100);
-
-
-            } else {
-
-                var className = (index % 2 === 0) ? 'left' : 'right';
-
-                // Add the determined class to the current div
-                $(this).addClass(className);
-
-                setTimeout(() => {
-                    $(this).addClass("up");
-                }, 800);
-
-            }
-
-        });
-
+    if (div.hasClass("big")) {
+        timeOut = 1800;
     }
 
+    if (!div.hasClass('active')) {
 
+        $(".card").addClass('active');
+
+        var container = card.closest('.card-container');
+
+        var isFullsize = container.hasClass("big");
+
+        var $cards = container.find(".card").toArray();
+        console.log("test")
+
+
+        if (isFullsize) {
+
+            $($cards).each(function(index) {
+
+                if ($(this).attr("id") == card.attr("id")) {
+
+                    $(this).removeClass("big");
+                    container.removeClass("big");
+
+                    setTimeout(() => {
+                        container.removeClass("active");
+                    }, 1800);
+
+                    container.animate({
+                        scrollTop: scrollBefore
+                    }, 1800);
+
+                } else {
+
+                    $(this).removeClass("up");
+
+                    setTimeout(() => {
+                        $(this).removeClass('left');
+                        $(this).removeClass('right');
+                    }, 500);
+
+                }
+
+            });
+
+            setTimeout(() => {
+                $($cards).each(function(index) {
+                    $(this).toggleClass("absolute");
+                    removeStyle($(this));
+                });
+
+            }, 1800);
+
+        } else {
+
+            scrollBefore = container.scrollTop();
+            var positionList = []
+
+            $($cards).each(function(index) {
+               var position = $(this).position(); // Get position relative to the offset parent
+               var width = $(this).width(); // Get width of the element
+               var height = $(this).height(); // Get height of the element
+
+               // Save position, width, and height data into an object
+               var elementData = {
+                   id: $(this).attr("id"),
+                   position: position,
+                   width: width,
+                   height: height
+               };
+
+               positionList.push(elementData);
+            });
+
+            positionList.forEach(function(elementData) {
+
+                thisCard = container.find("#"+elementData.id);
+
+               thisCard.css({
+                  position: 'absolute',
+                  top: (elementData.position.top + scrollBefore) + 'px',
+                  left: elementData.position.left + 'px',
+                  width: elementData.width + 'px',
+                  height: elementData.height + 'px'
+                });
+
+                thisCard.toggleClass("absolute");
+            });
+
+            $($cards).each(function(index) {
+
+                if ($(this).attr("id") == card.attr("id")) {
+
+                setTimeout(() => {
+                    $(this).addClass("big");
+                    container.addClass("big");
+                    container.addClass("active");
+
+                    container.animate({
+                        scrollTop: 0
+                    }, 500);
+
+                }, 100);
+
+                } else {
+
+                    var className = (index % 2 === 0) ? 'left' : 'right';
+
+                    // Add the determined class to the current div
+                    $(this).addClass(className);
+
+                    setTimeout(() => {
+                        $(this).addClass("up");
+                    }, 800);
+
+                }
+
+            });
+
+        }
+
+        setTimeout(() => {
+            $(".card").removeClass('active');
+        }, timeOut);
+
+    }
 
 }
 
 function turnAround(div) {
 
      if (!div.hasClass("big")) {
-     removeStyle(div);
+        removeStyle(div);
      }
 
      div.toggleClass("card-turning");

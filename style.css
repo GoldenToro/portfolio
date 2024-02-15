@@ -142,30 +142,6 @@ body {
 
         }
 
-        .more {
-
-            transition: all  0.5s;
-            position: absolute;
-            height: 10%;
-            aspect-ratio: 1 / 1;
-            cursor: pointer;
-            color: var(--color1);
-            left: 0%;
-            top: 0;
-
-        }
-        .exit {
-
-            transition: all  0.5s;
-            position: absolute;
-            height: 10%;
-            aspect-ratio: 1 / 1;
-            color: var(--color1);
-            cursor: pointer;
-            right: 0%;
-            top: 0;
-
-        }
 
     }
 
@@ -181,6 +157,50 @@ body {
 
     .back {
         transform: rotateY(180deg);
+        justify-content: space-between;
+
+        .more {
+
+            transition: all  0.5s;
+            position: absolute;
+            height: 10%;
+            aspect-ratio: 1 / 1;
+            cursor: pointer;
+            color: var(--color1);
+            left: 0%;
+            top: 0;
+
+        }
+
+         .more:hover {
+
+            scale: 1.1;
+        }
+
+        .exit {
+
+            transition: all  0.5s;
+            position: absolute;
+            height: 10%;
+            aspect-ratio: 1 / 1;
+            color: var(--color1);
+            cursor: pointer;
+            right: 0%;
+            top: 0;
+
+            svg {
+                transition: all  0.5s;
+            }
+
+
+        }
+
+         .exit:hover {
+
+            svg {
+                transform: rotateY(180deg);
+            }
+        }
 
         .statusbar {
 
@@ -189,13 +209,14 @@ body {
             flex-direction: row;
             justify-content: space-between;
 
+                transition: all 0.5s ease-in-out;
             padding: 15px;
 
 
 
             .status{
                  font-size: 1.5rem;
-                 width: 30%;
+
                  text-align: center;
              }
 
@@ -220,16 +241,134 @@ body {
 
         }
 
+
+        .slider {
+            position: relative;
+            min-height: 30%;
+
+            width: 100%;
+            overflow: hidden;
+            transition: all 0.5s;
+
+            .slider-button {
+                position: absolute;
+                transition: all 0.5s ease-in-out;
+                color: var(--color1);
+                top: 45%;
+                width: 10%;
+                z-index: 11;
+                cursor: pointer;
+                aspect-ratio: 1;
+
+                svg {
+                    position: absolute;
+                    transition: all  0.5s;
+                }
+            }
+
+            .slider-button.prev{
+                left: 2%;
+                transform: rotate(-180deg)
+
+
+            }
+
+            .slider-button:hover{
+
+                svg {
+                    transform: translateX(5%);
+                }
+
+            }
+
+             .slider-button.next{
+                left: 88%;
+            }
+
+
+            .slider-button.unavailable {
+                cursor: default;
+                color: grey;
+            }
+            .slider-button.unavailable:hover {
+                svg {
+                 transform: translateX(0%);
+                }
+            }
+
+
+            .slide {
+                position: absolute;
+
+                transition: all 0.5s ease-in-out;
+
+                cursor: pointer;
+
+                scale: 1;
+                height: 100%;
+                width: 100%;
+                left: 0%;
+
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-position:center;
+
+            }
+
+
+            .slide.right {
+
+                scale: 0.1;
+                left: 100%;
+                color: rgba(0,0,0,0);
+
+            }
+            .slide.left {
+
+                scale: 0.1;
+                left: -100%;
+                color: rgba(0,0,0,0);
+
+            }
+
+        }
+
          .text {
 
             position: relative;
             border-radius:  0 0 30px 30px;
+                transition: all 0.5s ease-in-out;
             padding: 15px;
             max-height: 50%;
             height: auto;
-            overflow-y: auto;
+            overflow-y: hidden;
             text-align: justify;
 
+        }
+
+         .textBlurContainer {
+
+            position: absolute;
+
+            bottom: 0;
+            border-radius: 0 0 30px 30px;
+            padding: 0px;
+            height: 100px;
+            width: 100%;
+            background: linear-gradient(0deg, rgba(0,0,0,0.9) 50%, rgba(0,0,0,0) 100%);
+            text-align: justify;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+            align-items: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.5s;
+        }
+
+         .textBlurContainer:hover {
+
+            font-size: 2.2rem;
         }
 
         .links {
@@ -276,7 +415,124 @@ body {
     left: 0% !important;
     min-width: clamp(0px, 84%, 933px);
     height: 90% !important;
-    margin: 0 8%;
+    margin: 0 5vw;
+
+    .back {
+
+        .more {
+
+            top: -1%;
+            left: -1%;
+
+        }
+
+         .more:hover {
+
+            scale: 0.9;
+        }
+
+        .exit {
+
+            top: -1%;
+            right: -1%;
+
+        }
+
+        .statusbar {
+            padding: 15px 5%;
+
+
+            .tags > div, .status > div{
+
+                font-size: 1.3rem;
+            }
+
+            .status {
+                font-size: 2rem;
+                }
+        }
+
+        .bigFlex {
+            flex-grow: 0;
+        }
+
+         .slider {
+
+            min-height: 55%;
+
+
+            .slider-button {
+
+                width: 8%;
+
+                border-radius: 50%;
+                background-color: rgba(0, 0, 0, 0.3);
+
+                svg {
+                    top: 0;
+                }
+
+            }
+
+            .slider-button.prev{
+                left: 5%;
+                transform: rotate(-180deg)
+
+
+            }
+
+             .slider-button.next{
+                left: 87%;
+            }
+
+            .slide {
+
+                left: 5%;
+                width: 90%;
+                cursor: default;
+
+            }
+
+            .slide.right {
+
+                left: 100%;
+
+            }
+
+            .slide.left {
+
+                left: -100%;
+
+            }
+        }
+
+        .links {
+
+            justify-content: space-around;
+        }
+         .text {
+
+            overflow-y: auto;
+            flex-grow: 1;
+            padding: 0 5%;
+            font-size: larger;
+
+
+        }
+
+         .textBlurContainer {
+
+            height: 0px;
+            margin: 0;
+            padding: 0;
+
+            color: rgba(0,0,0,0);
+            pointer-events: none;
+            font-size: 0;
+
+        }
+
+    }
 }
 
 .card.left {
@@ -334,90 +590,6 @@ body {
 
 }
 
-/*
-
-  Image Slider
-
-*/
-
-.slider {
-    position: relative;
-    min-height: 30%;
-
-    width: 100%;
-    overflow: hidden;
-
-    .slider-button {
-        position: absolute;
-        transition: all 0.5s ease-in-out;
-        color: var(--color1);
-        top: 0;
-        height: 100%;
-        width: 10%;
-        z-index: 11;
-        cursor: pointer;
-
-        svg {
-            position: absolute;
-            top: 40%;
-        }
-    }
-
-
-    .slider-button.unavailable {
-        cursor: default;
-        color: grey;
-    }
-    .slider-button.prev{
-        left: 2%;
-
-        svg {
-            transform: rotate(-180deg);
-        }
-
-    }
-
-     .slider-button.next{
-        left: 88%;
-
-    }
-
-    .slide {
-        position: absolute;
-
-        transition: all 0.5s ease-in-out;
-
-
-        scale: 1;
-        height: 100%;
-        width: 100%;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position:center;
-
-        .content{
-            position: absolute;
-            bottom: 0;
-        }
-    }
-
-
-    .slide.right {
-
-        scale: 0.1;
-        background-position: 500% center;
-        color: rgba(0,0,0,0);
-
-    }
-    .slide.left {
-
-        scale: 0.1;
-        background-position: -500% center;
-        color: rgba(0,0,0,0);
-
-    }
-
-}
 
 /*
 
@@ -450,7 +622,7 @@ body {
  }
 
 .wait{
-    transition: all 1s ease, background-position 2s ease;
+    transition: all 1s ease;
     pointer-events: none;
 }
 
@@ -495,12 +667,30 @@ body {
 
 */
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
   .card-container {
-    width: 80vw;
-    padding: 5vh 10vw;
+    width: 100vw;
+    padding: 5vh 0vw;
        gap: 0 7%;
   }
+
+      .card.big {
+
+            min-width: 96vw;
+            margin: 0 2vw;
+
+
+
+        .back {
+
+          .slider {
+            min-height: 35%;
+          }
+
+        }
+
+      }
+
 
     .card.left {
 
