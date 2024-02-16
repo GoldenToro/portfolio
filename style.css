@@ -818,12 +818,12 @@ background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 10%, rgba
 
   .card-container.big {
 
-        max-height: 74vh;
+        max-height: 74dvh;
       }
 
       .card {
-        min-width: 90vw;
-        max-width: 90vw;
+        min-width: 90dvw;
+        max-width: 90dvw;
 
 
       }
