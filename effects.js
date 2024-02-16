@@ -26,7 +26,6 @@ function updateCardEffects() {
 
             // normalise touch/mouse
             var pos = [e.offsetX,e.offsetY];
-            e.preventDefault();
             if ( e.type === "touchmove" ) {
               pos = [ e.touches[0].clientX, e.touches[0].clientY ];
             }
