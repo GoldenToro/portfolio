@@ -739,7 +739,7 @@ body {
       height: 100vh;
     }
     #blur {
-      backdrop-filter: blur(100vw);
+      backdrop-filter: blur(100vh);
     }
 
 #container {
