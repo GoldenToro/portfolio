@@ -664,6 +664,7 @@ body {
     color: var(--color1);
 
     bottom: 2%;
+    z-index: 20;
 
     svg {
         transition: all 0.5s ease;
@@ -742,7 +743,7 @@ body {
     visibility: hidden;
     }
 
-#container {
+    #container {
     height: 100dvh;
 background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 10%, rgba(245,225,122,1) 100%);
     }
@@ -816,10 +817,6 @@ background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 10%, rgba
 
       }
 
-  .card-container.big {
-
-        max-height: 74dvh;
-      }
 
       .card {
         min-width: 90dvw;
@@ -833,6 +830,7 @@ background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 10%, rgba
             min-width: 96vw;
             margin: 0 2vw;
             font-size: small;
+            height: 82% !important;
 
 
 
@@ -887,4 +885,6 @@ background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 10%, rgba
 
     }
 
+.project-button {
+    color: black;
 }
