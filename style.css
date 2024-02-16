@@ -742,9 +742,13 @@ body {
       backdrop-filter: blur(100vw);
     }
 
+#container {
+    height: 100dvh;
+    }
+
   .card-container {
         width: 100vw;
-        max-height: -webkit-fill-available;
+        max-height: 80dvh;
         padding: 5vh 0vw 0;
         gap: 0 0%;
 
