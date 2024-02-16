@@ -744,7 +744,7 @@ body {
 
   .card-container {
         width: 100vw;
-        max-height: 80vh;
+        max-height: -webkit-fill-available;
         padding: 5vh 0vw 0;
         gap: 0 0%;
 
