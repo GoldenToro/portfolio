@@ -20,7 +20,7 @@ function fillCard(card, obj, name) {
       $(card).find('.card').attr("id",`${name}-${obj["id"]}`);
       $(card).find('.title').text(obj["title"]);
 
-      $(card).find('.status').html(`Status:<br><div>${obj["status"]}</div>`);
+      $(card).find('.status').html(`<p>Status:</p><div>${obj["status"]}</div>`);
 
       for (var j = 0; j < obj["tags"].length; j++){
         var tag = obj["tags"][j];
