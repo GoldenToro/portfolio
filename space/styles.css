@@ -1,0 +1,179 @@
+@font-face {
+    font-family: 'mySpaceFont';
+    font-weight: bold;
+    src: url("/scr/fonts/goodtimes.otf") format("opentype");
+}
+
+
+body {
+    margin: 0;
+
+    overflow: hidden;
+
+}
+
+
+#overlay-universe {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    -webkit-transition: 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
+
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+
+    p {
+        font-family: 'mySpaceFont', bold, serif;
+        position: absolute;
+        max-width: 25%;
+        padding:  2%;
+        margin: 0;
+
+        -webkit-transition: 0.5s ease-in-out;
+        transition: 0.5s ease-in-out;
+    }
+
+    a {
+        -webkit-transition: 0.5s ease-in-out;
+        transition: 0.5s ease-in-out;
+    }
+
+    .line {
+        content: '';
+        position: absolute;
+        transform-origin: left top; /* set rotation origin */
+        background-color: white;
+        border-radius: 100px;
+
+        -webkit-transition: 0.5s ease-in-out;
+        transition: 0.5s ease-in-out;
+    }
+
+    #TL {
+        top: 0;
+        left: 0;
+        font-size: xx-large;
+    }
+
+    #TR {
+
+        top: 0;
+        right: 3%;
+        font-size: xx-large;
+    }
+
+    #BL {
+        bottom: 0;
+        left: 0;
+    }
+
+    #BR {
+
+        bottom: 2%;
+        right: 3%;
+        pointer-events: all;
+        font-size: xxx-large;
+    }
+
+
+
+    #text-planetNr {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        -webkit-transition: 0.5s ease-in-out;
+        transition: 0.5s ease-in-out;
+        color: rgba(0,0,0,0);
+
+        font-size: x-large;
+    }
+
+
+    #lineTL1 {
+        height: 5px; /* adjust height as needed */
+        width: 5%;
+        top: 5%;
+        left: 25%;
+        transform: rotate(0deg); /* rotate the pseudo-element */
+    }
+    #lineTL2 {
+        height: 5px; /* adjust height as needed */
+        width: 15%;
+        top: 4.9%;
+        left: 29.9%;
+        transform: rotate(45deg); /* rotate the pseudo-element */
+    }
+
+    #lineTR1 {
+        height:  15%; /* adjust height as needed */
+        width: 5px;
+        top: 7%;
+        right: 15%;
+        transform: rotate(0deg); /* rotate the pseudo-element */
+    }
+    #lineTR2 {
+        height:  25%; /* adjust height as needed */
+        width: 5px;
+        top: 21.7%;
+        right: 14.9%;
+        transform: rotate(60deg); /* rotate the pseudo-element */
+    }
+    #lineBR1 {
+        height: 5px; /* adjust height as needed */
+        width: 5%;
+        bottom: 6.5%;
+        right: 32%;
+        transform: rotate(0deg); /* rotate the pseudo-element */
+    }
+    #lineBR2 {
+        height: 5px; /* adjust height as needed */
+        width: 25%;
+        bottom: 6.3%;
+        right: 36.7%;
+        transform-origin: right top; /* set rotation origin */
+        transform: rotate(60deg); /* rotate the pseudo-element */
+    }
+
+}
+
+.overlay-hide {
+
+    #text-planetNr {
+
+        color: white !important;
+    }
+
+    p {
+        color: rgba(0,0,0,0);
+    }
+    a {
+        color: rgba(0,0,0,0);
+    }
+
+
+    .line {
+        background-color: rgba(0,0,0,0) !important;
+    }
+
+    #BR {
+        pointer-events: none;
+    }
+}
+
+
+
+
+.info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    mix-blend-mode: difference;
+}
