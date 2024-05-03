@@ -109,6 +109,7 @@ class ParticleSystem {
         this._geometry.setAttribute('angle', new THREE.Float32BufferAttribute([], 1));
 
         this._points = new THREE.Points(this._geometry, this._material);
+        this._points.frustumCulled = false;
 
         params.parent.add(this._points);
 
@@ -133,19 +134,8 @@ class ParticleSystem {
         this._sizeSpline.AddPoint(0.0, 1.0);
         this._sizeSpline.AddPoint(0.5, 5.0);
         this._sizeSpline.AddPoint(1.0, 1.0);
-
-        document.addEventListener('keyup', (e) => this._onKeyUp(e), false);
-
+        
         this._UpdateGeometry();
-    }
-
-    _onKeyUp(event) {
-        switch(event.keyCode) {
-            case 32: // SPACE
-                console.log('test')
-                this._AddParticles();
-                break;
-        }
     }
 
     _AddParticles(timeElapsed) {
@@ -153,14 +143,15 @@ class ParticleSystem {
             this.gdfsghk = 0.0;
         }
         this.gdfsghk += timeElapsed;
-        const ParticleSpeed = 50
-        const ParticleSize = 10
-        const ParticleLife = 5
-        const ParticleOffset = -120
-        const n = Math.floor(this.gdfsghk * ParticleSpeed);
-        this.gdfsghk -= n / 75.0;
 
-        var pointPosition = new THREE.Vector3(0, ParticleOffset, 0);
+        let velocityPercentage = this._rocket.velocity / this._rocket.maxVelocity
+        const ParticleSpeed = 1 * velocityPercentage
+        const ParticleSize = 5 * velocityPercentage
+        const ParticleLife = 1 * velocityPercentage / 2
+        const ParticleOffset = -20
+        const n = Math.floor(this.gdfsghk * ParticleSpeed );
+        this.gdfsghk -= n / 150.0;
+
         var pointDirection = new THREE.Vector3(0, ParticleOffset+15, 0);
 
         var rotationZ = this._rocket.rotation.z;
@@ -169,20 +160,16 @@ class ParticleSystem {
         var rotationMatrix = new THREE.Matrix4().makeRotationZ(rotationZ);
 
         // Apply the rotation matrix to the point
-        pointPosition.applyMatrix4(rotationMatrix);
         pointDirection.applyMatrix4(rotationMatrix);
 
         // Add the rotated point to the initial object's position to get the final point position
-        var finalPoint = pointPosition.clone().add(this._rocket.position);
+        var finalPoint = this._rocket.firePosition.clone()
         var direction = pointDirection.clone();
 
         let rocketPosition = finalPoint
-        console.log(rocketPosition);
+        //console.log(rocketPosition);
 
-        let startPosition =  new THREE.Vector3(
-            (Math.random() * 2 - 1) * 1.0,
-            (Math.random() * 2 - 1) * 1.0,
-            (Math.random() * 2 - 1) * 1.0 +800)
+        let startPosition =  new THREE.Vector3((Math.random() * 2 - 1) * 1.0,(Math.random() * 2 - 1) * 1.0,(Math.random() * 2 - 1) * 1.0 +800)
 
         for (let i = 0; i < n; i++) {
             const life = (Math.random() * 0.75 + 0.25) * ParticleLife;
@@ -190,7 +177,7 @@ class ParticleSystem {
                 position: rocketPosition,
                 size: (Math.random() * 0.5 + 0.5) * 4.0 * ParticleSize,
                 colour: new THREE.Color(),
-                alpha: 1.0,
+                alpha: 1,
                 life: life,
                 maxLife: life,
                 rotation: Math.random() * 2.0 * Math.PI,
@@ -547,6 +534,81 @@ function createMaterial(param) {
     });
 }
 
+function valueTowards(value, goal, step = 0.01, digits = 3) {
+
+
+    if (value < goal) {
+        return Number(Number(value) + step).toFixed(digits)
+    }
+    else if (value > goal) {
+        return Number(Number(value) - step).toFixed(digits)
+    }
+    else {
+        return value
+    }
+}
+function moveOneUnitCloserToObject(object, goalPosition, distance = 1) {
+    // Calculate the direction from the current position of the object to the goal position
+    var direction = new THREE.Vector3();
+    direction.subVectors(goalPosition, object.position)
+
+    // Multiply the direction by the desired distance to move (1 unit)
+    var movement = direction.multiplyScalar(distance);
+
+    // Update the position of the object
+    object.position.add(movement);
+}
+function scaleObjectSlowly(object, scale, speed = 0.05) {
+
+
+    function changeScale(actualScale, newScale) {
+        if (actualScale < newScale) {
+            return Number(Number(actualScale) + speed).toFixed(3)
+        }
+        else if (actualScale > newScale) {
+            return Number(Number(actualScale) - speed).toFixed(3)
+        }
+        else {
+            return actualScale
+        }
+    }
+    //console.log("Now: "+object.scale.x+" ; Goal: "+scale+" ; Next: "+ changeScale(object.scale.x, scale))
+
+    object.scale.set(
+        changeScale(object.scale.x, scale),
+        changeScale(object.scale.y, scale),
+        changeScale(object.scale.z, scale),
+    )
+
+}
+
+function rotateTowardsGoal(object, goalRotation, speed) {
+    // Get the current rotation of the object
+    var currentRotation = new THREE.Euler().setFromQuaternion(object.quaternion);
+
+    // Calculate the difference between the current rotation and the goal rotation
+    var rotationDifference = {
+        x: goalRotation.x - currentRotation.x,
+        y: goalRotation.y - currentRotation.y,
+        z: goalRotation.z - currentRotation.z
+    };
+
+    // Calculate the rotation step based on the speed
+    var rotationStep = {
+        x: rotationDifference.x > 0 ? Math.min(rotationDifference.x, speed) : Math.max(rotationDifference.x, -speed),
+        y: rotationDifference.y > 0 ? Math.min(rotationDifference.y, speed) : Math.max(rotationDifference.y, -speed),
+        z: rotationDifference.z > 0 ? Math.min(rotationDifference.z, speed) : Math.max(rotationDifference.z, -speed)
+    };
+
+    // Incrementally adjust the rotation towards the goal
+    currentRotation.x += rotationStep.x;
+    currentRotation.y += rotationStep.y;
+    currentRotation.z += rotationStep.z;
+
+    // Set the new rotation to the object
+    object.quaternion.setFromEuler(currentRotation);
+}
+
 function distanceBetweenPointsXY(Pos1, Pos2) {
     var distance = Math.sqrt(Math.pow(Pos2.x - Pos1.x, 2) + Math.pow(Pos2.y - Pos1.y, 2));
     return Math.round(distance);
@@ -590,6 +652,7 @@ function createPlanet(name, material, rotationSpeed = 0, rotationAxis = '', rota
     }
 
     let planet = new THREE.Mesh(new THREE.SphereGeometry(size, 64, 64).clone(), material.clone());
+    planet.frustumCulled = false;
     planet.position.set(0, 0, 0);
     planet.geometry.computeTangents();
     //let atmosphere = createAtmosphere(material.uniforms)
@@ -763,6 +826,21 @@ function createFire(scene, camera, rocket){
     });
 }
 
+// Define a recursive function to traverse the scene hierarchy
+function traverseScene(object, callback) {
+    // If the object has children, traverse each child
+    if (object.children.length > 0) {
+        object.children.forEach(child => {
+            traverseScene(child, callback);
+        });
+    }
+
+    // If the object has a name and a position, print its name and position
+    if (object.name && object.position) {
+        callback(object.name, object.position);
+    }
+}
+
 function createRocket(scene, camera) {
 
     let gltfLoader = new GLTFLoader();
@@ -775,22 +853,42 @@ function createRocket(scene, camera) {
 
                 var rocket = gltf.scene;
 
-                rocket.position.set(0, 0, 500);
+                rocket.position.set(0, 0, 0);
+                rocket.scale.set(5, 5, 5); // Set scale factors (adjust as needed)
 
-                rocket.scale.set(100, 100, 100); // Set scale factors (adjust as needed)
+
+                rocket.velocity = 0.0
+                rocket.maxVelocity = 20.0; // Maximum velocity
+                rocket.minVelocity = 0.0; // Minimum velocity
+                rocket.acceleration = 0.05; // Acceleration rate
+
+                rocket.firePosition = new THREE.Vector3(0, 0, 0);
 
                 // Add the object to the scene
+
+                rocket.increaseVelocity = function() {
+                    if (this.velocity < this.maxVelocity) {
+                        this.velocity += this.acceleration;
+                    }
+                };
+
+                // Function to decrease velocity
+                rocket.decreaseVelocity = function() {
+                    if (this.velocity > this.minVelocity) {
+                        this.velocity -= this.acceleration;
+                    }
+                };
 
 
                 // Create a directional light
                 var rocketLight = new THREE.DirectionalLight(0xffffff, 1);
+                rocketLight.name = 'rocketLight';
 
                 // Set the position of the light
                 rocketLight.position.set(10, 10, 0); // Adjust the position as needed
 
                 // Add the light to the scene
                 rocket.add(rocketLight);
-
 
                 scene.add(rocket);
 
@@ -832,7 +930,7 @@ function createThePlanets(scene) {
     }
 
 
-    console.log(data);
+    //console.log(data);
 
 
     let planets = []
@@ -876,7 +974,7 @@ function loadScene() {
 
     const scene = new THREE.Scene();
 
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
     camera.position.set(0, 0, 2500);
 
     if (systemParams.debugPlanets) {
@@ -918,29 +1016,35 @@ function loadScene() {
     });
     let stars = createTheStars(scene, maxSunDistance * 5)
 
-    let rocket, rocketLight, fire
+    let rocket, rocketLight, fire, lightFire
     createRocket(scene, camera).then(function (rocketNew) {
         // Do something with the loaded rocket object
         rocket = rocketNew
 
         rocket.traverse(function (child) {
-            if (child instanceof THREE.DirectionalLight) {
+            if (child.name == "rocketLight" ) {
                 rocketLight = child;
             }
         });
 
+        rocket.position.set(-300, -300, 60);
+
         fire = createFire(scene, camera, rocket);
-        console.log(fire)
+        //console.log(fire)
+
+// Create a point light
+        lightFire = new THREE.PointLight(0xffffff, 10000, 100); // Green light
+        lightFire.position.set(0, -5, 0); // Set the position of the light
+
+// Add the light to the ball
+        rocket.add(lightFire);
 
     }).catch(function (error) {
         // Handle errors
     });
 
-    // Fire
+    camera.position.set(0, 0, 250);
 
-
-
-    camera.position.set(0, 0, maxSunDistance * 1.33);
 
     // ##################### Handling ####################
 
@@ -1019,14 +1123,13 @@ function loadScene() {
         }
 
 
-        console.log(activePlanet);
+        //console.log(activePlanet);
         //console.log(lastCameraPosition);
 
     }
 
     function updatePlanetText() {
 
-        console.log("gothere");
         if (activePlanet == null) {
 
             document.getElementById('overlay-universe').classList.add('overlay-hide');
@@ -1042,6 +1145,8 @@ function loadScene() {
         }
 
     }
+
+    let RocketPlanetSpeed = 0
 
     function animate() {
 
@@ -1075,8 +1180,38 @@ function loadScene() {
 
             if (rocket) {
 
-                //rocket.rotation['y'] += 0.005;
-                rocket.rotation['z'] += 0.005;
+                const FireOffset = -6.5
+                var pointPosition = new THREE.Vector3(0, FireOffset, 0);
+                var pointDirection = new THREE.Vector3(0, -100, 0);
+                var rotationZ = rocket.rotation.z;
+
+                // Create a rotation matrix based on the rotationZ
+                var rotationMatrix = new THREE.Matrix4().makeRotationZ(rotationZ);
+
+                // Apply the rotation matrix to the point
+                pointPosition.applyMatrix4(rotationMatrix);
+                pointDirection.applyMatrix4(rotationMatrix);
+
+                // Add the rotated point to the initial object's position to get the final point position
+                rocket.firePosition = pointPosition.clone().add(rocket.position);
+                rocket.fireDestination = pointDirection.clone().add(rocket.position);
+
+
+
+                //console.log(rocket.velocity)
+
+                if ( rocket.velocity >= 0.1 ) {
+
+                    // Create a direction vector pointing forward in the local coordinate system
+                    var direction = new THREE.Vector3(0, 1, 0); // Assuming Z-axis is forward
+
+                    // Apply the object's rotation to the direction vector
+                    direction.applyQuaternion(rocket.quaternion);
+
+                    // Adjust the object's position using the direction vector
+                    rocket.position.add(direction.multiplyScalar(0.1 * rocket.velocity));
+
+                }
 
                 if (rocketLight) {
 
@@ -1114,6 +1249,10 @@ function loadScene() {
 
                 }
 
+                if (lightFire) {
+                    lightFire.intensity = 10000 * (rocket.velocity / rocket.maxVelocity)
+                    console.log(lightFire.intensity)
+                }
             }
 
 
@@ -1123,27 +1262,47 @@ function loadScene() {
 
             // Move camera based on arrow key input
             const speed = window.innerWidth / 500;
-            if (keyState['Numpad8']) {
-                camera.position.y += speed;
-                rocket.position.y += speed;
+
+            if (keyState['Space']) {
+
+                moveOneUnitCloserToObject(camera, new THREE.Vector3(0, 0, 2500), 0.01)
+
+            } else if (rocket) {
+
+                moveOneUnitCloserToObject(camera, new THREE.Vector3(rocket.position.x, rocket.position.y, 250), 0.02)
+
+                if (keyState['Numpad8']) {
+                    rocket.position.y += speed;
+                }
+                if (keyState['Numpad2']) {
+                    rocket.position.y -= speed;
+                }
+                if (keyState['Numpad4']) {
+                    rocket.position.x -= speed;
+                }
+                if (keyState['Numpad6']) {
+                    rocket.position.x += speed;
+                }
             }
-            if (keyState['Numpad2']) {
-                camera.position.y -= speed;
-                rocket.position.y -= speed;
+
+        }
+        function moveRocket() {
+
+            rocket.rotation.y = valueTowards(rocket.rotation.y, 0)
+
+            if (keyState['ArrowUp']) {
+                rocket.increaseVelocity();
             }
-            if (keyState['Numpad4']) {
-                camera.position.x -= speed;
-                rocket.position.x -= speed;
+            if (keyState['ArrowDown']) {
+                rocket.decreaseVelocity();
             }
-            if (keyState['Numpad6']) {
-                camera.position.x += speed;
-                rocket.position.x += speed;
+            if (keyState['ArrowLeft']) {
+                let rotationSpeed = 0.012 - (0.01 * (rocket.velocity / rocket.maxVelocity))
+                rocket.rotation['z'] += rotationSpeed;
             }
-            if (keyState['NumpadSubtract']) {
-                camera.position.z += speed * 10;
-            }
-            if (keyState['NumpadAdd']) {
-                camera.position.z -= speed * 10;
+            if (keyState['ArrowRight']) {
+                let rotationSpeed = 0.012 - (0.01 * (rocket.velocity / rocket.maxVelocity))
+                rocket.rotation['z'] -= rotationSpeed;
             }
 
         }
@@ -1166,10 +1325,48 @@ function loadScene() {
         if (activePlanet == null) {
 
             moveCamera();
+            if (rocket && !keyState['Space'] ) {
+
+                moveRocket();
+
+                scaleObjectSlowly(rocket,5);
+
+            }
 
         } else {
 
-            camera.position.set(activePlanet.position.x, activePlanet.position.y, activePlanet.userData.size * 2)
+            moveOneUnitCloserToObject(camera, new THREE.Vector3(activePlanet.position.x, activePlanet.position.y, activePlanet.userData.size * 2), 0.2)
+
+            if (rocket) {
+
+                rocket.decreaseVelocity()
+
+                scaleObjectSlowly(rocket,1);
+
+                var orbitRadius = activePlanet.userData.size * 1.1; // Radius of the orbit circle
+                var orbitSpeed = 0.001; // Speed of the orbit motion
+
+                var angle = Date.now() * orbitSpeed; // Calculate angle based on time
+                var orbitPosition = new THREE.Vector3(
+                    Math.cos(angle) * orbitRadius, // X position
+                    0,                              // Y position (assuming orbit is on the XZ plane)
+                    Math.sin(angle) * orbitRadius  // Z position
+                );
+
+                //console.log(Math.cos(angle))
+                rocket.rotation.set(
+                    0,
+                    (-1 * Math.acos(Math.cos(angle))) + Math.PI * 0.5,
+                    Math.PI * 0.5
+                )
+
+                // Set the position of the orbiting object relative to the orbit center
+                var newPosition = activePlanet.position.clone().add(orbitPosition)
+                moveOneUnitCloserToObject(rocket, newPosition, RocketPlanetSpeed);
+
+                RocketPlanetSpeed = RocketPlanetSpeed > 1 ? 1 : RocketPlanetSpeed + 0.0005;
+                console.log(RocketPlanetSpeed)
+            }
 
         }
 
