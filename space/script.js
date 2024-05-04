@@ -1510,7 +1510,7 @@ function loadScene() {
     // Events
     window.addEventListener('resize', () => {
         // Resize camera aspect ratio and renderer size to the new window size
-        camera.aspect = bodyHeight / bodyWidth;
+        camera.aspect = bodyWidth / bodyHeight ;
         camera.updateProjectionMatrix();
         var body = document.body;
 
