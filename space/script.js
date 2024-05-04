@@ -7,8 +7,6 @@ import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 import {Atmosphere} from './atmosphere.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 
-// Particlesystem from https://github.com/simondevyoutube/ThreeJS_Tutorial_ParticleSystems
-
 const _VS = `
 uniform float pointMultiplier;
 
@@ -41,6 +39,8 @@ void main() {
   gl_FragColor = texture2D(diffuseTexture, coords) * vColour;
 }`;
 
+var paused = true;
+var won = false;
 
 class LinearSpline {
     constructor(lerp) {
@@ -134,7 +134,7 @@ class ParticleSystem {
         this._sizeSpline.AddPoint(0.0, 1.0);
         this._sizeSpline.AddPoint(0.5, 5.0);
         this._sizeSpline.AddPoint(1.0, 1.0);
-        
+
         this._UpdateGeometry();
     }
 
@@ -145,14 +145,19 @@ class ParticleSystem {
         this.gdfsghk += timeElapsed;
 
         let velocityPercentage = this._rocket.velocity / this._rocket.maxVelocity
-        const ParticleSpeed = 1 * velocityPercentage
-        const ParticleSize = 5 * velocityPercentage
-        const ParticleLife = 1 * velocityPercentage / 2
+        const ParticleSpeed = 1 * velocityPercentage + 0.2
+        const ParticleSize = 4 * velocityPercentage + 0.2
+        var ParticleLife = (1 * velocityPercentage / 3) + 0.5
         const ParticleOffset = -20
-        const n = Math.floor(this.gdfsghk * ParticleSpeed );
+        const n = Math.floor(this.gdfsghk * ParticleSpeed);
         this.gdfsghk -= n / 150.0;
 
-        var pointDirection = new THREE.Vector3(0, ParticleOffset+15, 0);
+        if (velocityPercentage <= 0.01) {
+
+            ParticleLife = 0
+        }
+
+        var pointDirection = new THREE.Vector3(0, ParticleOffset + 15, 0);
 
         var rotationZ = this._rocket.rotation.z;
 
@@ -169,7 +174,7 @@ class ParticleSystem {
         let rocketPosition = finalPoint
         //console.log(rocketPosition);
 
-        let startPosition =  new THREE.Vector3((Math.random() * 2 - 1) * 1.0,(Math.random() * 2 - 1) * 1.0,(Math.random() * 2 - 1) * 1.0 +800)
+        let startPosition = new THREE.Vector3((Math.random() * 2 - 1) * 1.0, (Math.random() * 2 - 1) * 1.0, (Math.random() * 2 - 1) * 1.0 + 800)
 
         for (let i = 0; i < n; i++) {
             const life = (Math.random() * 0.75 + 0.25) * ParticleLife;
@@ -538,15 +543,14 @@ function valueTowards(value, goal, step = 0.01, digits = 3) {
 
 
     if (value < goal) {
-        return Number(Number(value) + step).toFixed(digits)
-    }
-    else if (value > goal) {
-        return Number(Number(value) - step).toFixed(digits)
-    }
-    else {
-        return value
+        return +(Number(Number(value) + step).toFixed(digits))
+    } else if (value > goal) {
+        return +(Number(Number(value) - step).toFixed(digits))
+    } else {
+        return Number(value)
     }
 }
+
 function moveOneUnitCloserToObject(object, goalPosition, distance = 1) {
     // Calculate the direction from the current position of the object to the goal position
     var direction = new THREE.Vector3();
@@ -558,20 +562,20 @@ function moveOneUnitCloserToObject(object, goalPosition, distance = 1) {
     // Update the position of the object
     object.position.add(movement);
 }
+
 function scaleObjectSlowly(object, scale, speed = 0.05) {
 
 
     function changeScale(actualScale, newScale) {
         if (actualScale < newScale) {
             return Number(Number(actualScale) + speed).toFixed(3)
-        }
-        else if (actualScale > newScale) {
+        } else if (actualScale > newScale) {
             return Number(Number(actualScale) - speed).toFixed(3)
-        }
-        else {
+        } else {
             return actualScale
         }
     }
+
     //console.log("Now: "+object.scale.x+" ; Goal: "+scale+" ; Next: "+ changeScale(object.scale.x, scale))
 
     object.scale.set(
@@ -681,15 +685,16 @@ function createPlanet(name, material, rotationSpeed = 0, rotationAxis = '', rota
         opacity: systemParams.clickablePlanet.opacity  // Adjust opacity for semi-transparency
     });
 
-    // Create a sphere geometry
-    const geometryClickSphere = new THREE.SphereGeometry(size * material.uniforms.radius.value + 5, 32, 32);
-
+    var geometryClickSphere = new THREE.SphereGeometry(size * material.uniforms.radius.value + 5, 32, 32);
     // Create a mesh with the geometry and material
+    if (sunDistance === 0) {
+
+        geometryClickSphere = new THREE.SphereGeometry(size * material.uniforms.radius.value * 0.97, 32, 32);
+    }
+
     const clickSphere = new THREE.Mesh(geometryClickSphere, materialClickSphere);
     clickSphere.name = name + "-clickable"
     planet.add(clickSphere);
-
-
     return planet
 }
 
@@ -817,7 +822,7 @@ function createTheStars(scene, maxDistance) {
     return starField
 }
 
-function createFire(scene, camera, rocket){
+function createFire(scene, camera, rocket) {
 
     return new ParticleSystem({
         parent: scene,
@@ -857,7 +862,7 @@ function createRocket(scene, camera) {
                 rocket.scale.set(5, 5, 5); // Set scale factors (adjust as needed)
 
 
-                rocket.velocity = 0.0
+                rocket.velocity = 0.001
                 rocket.maxVelocity = 20.0; // Maximum velocity
                 rocket.minVelocity = 0.0; // Minimum velocity
                 rocket.acceleration = 0.05; // Acceleration rate
@@ -866,14 +871,14 @@ function createRocket(scene, camera) {
 
                 // Add the object to the scene
 
-                rocket.increaseVelocity = function() {
+                rocket.increaseVelocity = function () {
                     if (this.velocity < this.maxVelocity) {
                         this.velocity += this.acceleration;
                     }
                 };
 
                 // Function to decrease velocity
-                rocket.decreaseVelocity = function() {
+                rocket.decreaseVelocity = function () {
                     if (this.velocity > this.minVelocity) {
                         this.velocity -= this.acceleration;
                     }
@@ -908,7 +913,7 @@ function createRocket(scene, camera) {
 function createTheSun(scene) {
 
     const materialSun = createMaterial(sunParam)
-    let sun = createPlanet("Sun-Center", materialSun, 0.0005, 'z', 0, 10);
+    let sun = createPlanet("Sun-Center", materialSun, 0.0005, 'z', 0, 10, 0);
     scene.add(sun)
     return sun;
 
@@ -947,7 +952,7 @@ function createThePlanets(scene) {
         scene.add(planet)
 
         const circleMesh = createCircle(lastDistance, 0x555555);
-        circleMesh.name = "orbit-" + i
+        circleMesh.name = "orbit-" + (i + 1)
         scene.add(circleMesh);
         i++;
     });
@@ -1014,7 +1019,7 @@ function loadScene() {
             maxSunDistance = sunDistance;
         }
     });
-    let stars = createTheStars(scene, maxSunDistance * 5)
+    let stars = createTheStars(scene, maxSunDistance * 10)
 
     let rocket, rocketLight, fire, lightFire
     createRocket(scene, camera).then(function (rocketNew) {
@@ -1022,7 +1027,7 @@ function loadScene() {
         rocket = rocketNew
 
         rocket.traverse(function (child) {
-            if (child.name == "rocketLight" ) {
+            if (child.name == "rocketLight") {
                 rocketLight = child;
             }
         });
@@ -1045,6 +1050,78 @@ function loadScene() {
 
     camera.position.set(0, 0, 250);
 
+// Create an AudioListener
+    var listener = new THREE.AudioListener();
+    camera.add(listener)
+
+// Create an Audio object and load your music file
+    var audioLoader = new THREE.AudioLoader();
+    var audio = new THREE.Audio(listener);
+    audioLoader.load('/scr/music/space-atmospheric-background-124841.mp3', function (buffer) {
+        audio.setBuffer(buffer);
+        audio.setLoop(true); // Set the music to loop
+        audio.setVolume(0.3); // Adjust the volume (0.0 to 1.0)
+        audio.pause(); // Start playing the music
+    });
+
+    var audioLoader2 = new THREE.AudioLoader();
+    var audio2 = new THREE.Audio(listener);
+    audioLoader2.load('/scr/music/spaceship-ambient-sfx-164114.mp3', function (buffer) {
+        audio2.setBuffer(buffer);
+        audio2.setLoop(true); // Set the music to loop
+        audio2.setVolume(0.1); // Set the volume (customizable parameter)
+        audio2.pause(); // Start playing the second music
+    });
+
+    // Get the button element
+    var toggleButton = document.getElementById('toggleButton');
+    var pauseButton = document.getElementById('pauseButton');
+
+    // Function to toggle audio mute/unmute
+    var muteIcon = document.getElementById('muteIcon');
+    var unmuteIcon = document.getElementById('unmuteIcon');
+
+    function toggleAudio() {
+        // Check if audio is currently muted
+
+        if (audio.isPlaying) {
+            // If muted, unmute the audio
+            audio.pause();
+            audio2.pause();
+            muteIcon.style.display = 'none';
+            unmuteIcon.style.display = 'inline';
+        } else {
+            // If unmuted, mute the audio
+            audio.play();
+            audio2.play();
+            muteIcon.style.display = 'inline';
+            unmuteIcon.style.display = 'none';
+        }
+    }
+
+    var playIcon = document.getElementById('playIcon');
+    var pauseIcon = document.getElementById('pauseIcon');
+
+    function toggleRendering() {
+        if (paused) {
+            paused = false;
+            animate();
+            playIcon.style.display = 'none';
+            pauseIcon.style.display = 'inline';
+            var overlay = document.getElementById('overlay-pause');
+            overlay.classList.remove('fade-in');
+        } else {
+            paused = true;
+            playIcon.style.display = 'inline';
+            pauseIcon.style.display = 'none';
+            var overlay = document.getElementById('overlay-pause');
+            overlay.classList.add('fade-in');
+        }// Toggle the paused state
+    }
+
+    // Add click event listener to the button
+    toggleButton.addEventListener('click', toggleAudio);
+    pauseButton.addEventListener('click', toggleRendering);
 
     // ##################### Handling ####################
 
@@ -1071,7 +1148,7 @@ function loadScene() {
         //console.log("Start");
         //console.log(activePlanet);
         //console.log(lastCameraPosition);
-        if (activePlanet == null) {
+        if ((activePlanet == null) && (!keyState['Space'])) {
 
             var raycaster = new THREE.Raycaster(); // create once
             var mouse = new THREE.Vector2(); // create once
@@ -1105,7 +1182,6 @@ function loadScene() {
                 const planetID = parseInt(activePlanet.name.split("-")[1]);
                 // Retrieve the orbit object by its name
                 const orbitObject = scene.getObjectByName("orbit-" + planetID);
-
                 // Check if the orbit object is found
                 if (orbitObject) {
                     // Orbit object found, you can use it here
@@ -1118,8 +1194,15 @@ function loadScene() {
         } else {
 
             activePlanet = null;
-            camera.position.set(lastCameraPosition.x, lastCameraPosition.y, lastCameraPosition.z);
             updatePlanetText();
+
+            if (won) {
+                var overlay = document.getElementById('youWon');
+                overlay.classList.add('fade-in');
+                overlay.style.display = 'block'; // Show the overlay
+                paused = true
+                audio2.pause()
+            }
         }
 
 
@@ -1132,7 +1215,7 @@ function loadScene() {
 
         if (activePlanet == null) {
 
-            document.getElementById('overlay-universe').classList.add('overlay-hide');
+            document.getElementById('overlay-planet').classList.add('overlay-hide');
         } else {
 
             let {title, status, link, description} = activePlanet.userData;
@@ -1140,7 +1223,7 @@ function loadScene() {
             document.getElementById('TR').textContent = `STATUS: ${status}`;
             document.getElementById('BL').textContent = `${description}`;
 
-            document.getElementById('overlay-universe').classList.remove('overlay-hide');
+            document.getElementById('overlay-planet').classList.remove('overlay-hide');
 
         }
 
@@ -1149,6 +1232,8 @@ function loadScene() {
     let RocketPlanetSpeed = 0
 
     function animate() {
+
+        //console.log(paused)
 
         function moveAndRotatePlanets() {
 
@@ -1185,6 +1270,8 @@ function loadScene() {
                 var pointDirection = new THREE.Vector3(0, -100, 0);
                 var rotationZ = rocket.rotation.z;
 
+                audio2.setVolume((rocket.velocity / rocket.maxVelocity) * 0.25);
+
                 // Create a rotation matrix based on the rotationZ
                 var rotationMatrix = new THREE.Matrix4().makeRotationZ(rotationZ);
 
@@ -1197,10 +1284,9 @@ function loadScene() {
                 rocket.fireDestination = pointDirection.clone().add(rocket.position);
 
 
-
                 //console.log(rocket.velocity)
 
-                if ( rocket.velocity >= 0.1 ) {
+                if (rocket.velocity >= 0.1) {
 
                     // Create a direction vector pointing forward in the local coordinate system
                     var direction = new THREE.Vector3(0, 1, 0); // Assuming Z-axis is forward
@@ -1209,8 +1295,28 @@ function loadScene() {
                     direction.applyQuaternion(rocket.quaternion);
 
                     // Adjust the object's position using the direction vector
-                    rocket.position.add(direction.multiplyScalar(0.1 * rocket.velocity));
+                    // rocket.position.add(direction.multiplyScalar(0.1 * rocket.velocity));
+                    var position = rocket.position.add(direction.multiplyScalar(0.1 * rocket.velocity)).clone()
+                    moveOneUnitCloserToObject(rocket, new THREE.Vector3(position.x, position.y, 60), 0.01)
 
+
+                    var raycaster = new THREE.Raycaster();
+
+                    var direction = new THREE.Vector3(0, 0, -1);
+
+                    raycaster.set(rocket.position, direction);
+
+                    var intersects = raycaster.intersectObject(sun);
+
+                    if (intersects.length > 0) {
+
+                        var overlay = document.getElementById('youDied');
+                        overlay.classList.add('fade-in');
+                        overlay.style.display = 'block'; // Show the overlay
+                        paused = true
+                        audio2.pause()
+
+                    }
                 }
 
                 if (rocketLight) {
@@ -1251,7 +1357,7 @@ function loadScene() {
 
                 if (lightFire) {
                     lightFire.intensity = 10000 * (rocket.velocity / rocket.maxVelocity)
-                    console.log(lightFire.intensity)
+                    //console.log(lightFire.intensity)
                 }
             }
 
@@ -1286,21 +1392,23 @@ function loadScene() {
             }
 
         }
+
         function moveRocket() {
 
             rocket.rotation.y = valueTowards(rocket.rotation.y, 0)
 
-            if (keyState['ArrowUp']) {
+            //console.log(rocket.position.z)
+            if (keyState['ArrowUp'] || keyState['KeyW']) {
                 rocket.increaseVelocity();
             }
-            if (keyState['ArrowDown']) {
+            if (keyState['ArrowDown'] || keyState['KeyS']) {
                 rocket.decreaseVelocity();
             }
-            if (keyState['ArrowLeft']) {
+            if (keyState['ArrowLeft'] || keyState['KeyA']) {
                 let rotationSpeed = 0.012 - (0.01 * (rocket.velocity / rocket.maxVelocity))
                 rocket.rotation['z'] += rotationSpeed;
             }
-            if (keyState['ArrowRight']) {
+            if (keyState['ArrowRight'] || keyState['KeyD']) {
                 let rotationSpeed = 0.012 - (0.01 * (rocket.velocity / rocket.maxVelocity))
                 rocket.rotation['z'] -= rotationSpeed;
             }
@@ -1311,11 +1419,19 @@ function loadScene() {
             const visitedCount = planets.filter(planet => planet.userData.visited).length;
             const totalCount = planets.length;
             document.getElementById('text-planetNr').textContent = `${visitedCount} / ${totalCount} Planets visited`;
+
+            if (visitedCount === totalCount) {
+                won = true
+            }
         }
 
         stats.begin();
 
-        requestAnimationFrame(animate);
+        if (!paused) {
+
+            requestAnimationFrame(animate);
+        }
+
         var deltaTime = clock.getDelta();
 
         updateTextOverlay();
@@ -1325,11 +1441,11 @@ function loadScene() {
         if (activePlanet == null) {
 
             moveCamera();
-            if (rocket && !keyState['Space'] ) {
+            if (rocket && !keyState['Space']) {
 
                 moveRocket();
 
-                scaleObjectSlowly(rocket,5);
+                scaleObjectSlowly(rocket, 5);
 
             }
 
@@ -1341,7 +1457,7 @@ function loadScene() {
 
                 rocket.decreaseVelocity()
 
-                scaleObjectSlowly(rocket,1);
+                scaleObjectSlowly(rocket, 1);
 
                 var orbitRadius = activePlanet.userData.size * 1.1; // Radius of the orbit circle
                 var orbitSpeed = 0.001; // Speed of the orbit motion
@@ -1365,7 +1481,7 @@ function loadScene() {
                 moveOneUnitCloserToObject(rocket, newPosition, RocketPlanetSpeed);
 
                 RocketPlanetSpeed = RocketPlanetSpeed > 1 ? 1 : RocketPlanetSpeed + 0.0005;
-                console.log(RocketPlanetSpeed)
+                //console.log(RocketPlanetSpeed)
             }
 
         }
@@ -1388,6 +1504,7 @@ function loadScene() {
     });
 
     animate();
+
 
     console.log('done');
 }

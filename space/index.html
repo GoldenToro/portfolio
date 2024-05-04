@@ -2,17 +2,125 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="shortcut icon" href="#">
     <title>Procedural Planets</title>
     <link rel="stylesheet" type="text/css" href="/space/styles.css">
 </head>
 
-<body>
-<div id="app">
-    <div id="overlay-universe" class="overlay-hide">
-        <div id="text-planetNr">0 / N Planets visited</div>
+<body><div id="app">
+
+    <div id="overlay-menu">
+
+        <!-- Toggle Audio button -->
+        <button id="toggleButton" class="svg-button" onkeyup="event.preventDefault()">
+            <svg id="muteIcon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor" style="display: none;">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <g id="Shopicon">
+                        <path d="M8,42.828L18.448,32.38l11.647,9.32V20.733L42.828,8L40,5.172l-9.905,9.905V5.375L17.397,15.539h-7.303v16h3.538L5.172,40 L8,42.828z M26.095,33.376l-4.8-3.842l4.8-4.801V33.376z M14.095,19.539h4.707l7.293-5.838v5.376l-8.462,8.462h-3.538V19.539z"></path>
+                    </g>
+                </g>
+            </svg>
+            <svg id="unmuteIcon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor">
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <g id="Shopicon">
+                        <path d="M24,42.161V5.836L11.303,16H4v16h7.303L24,42.161z M8,20h4.707L20,14.162v19.675L12.707,28H8V20z"></path>
+                        <path d="M28,28v4c4.411,0,8-3.589,8-8s-3.589-8-8-8v4c2.206,0,4,1.794,4,4S30.206,28,28,28z"></path>
+                        <path d="M44,24c0-9.374-7.626-17-17-17v4c7.168,0,13,5.832,13,13s-5.832,13-13,13v4C36.374,41,44,33.374,44,24z"></path>
+                    </g>
+                </g>
+            </svg>
+        </button>
+
+        <!-- Pause/Resume Rendering button -->
+        <button id="pauseButton" class="svg-button" onkeyup="event.preventDefault()">
+            <svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                <rect x="6" y="4" width="4" height="16"/>
+                <rect x="14" y="4" width="4" height="16"/>
+            </svg>
+            <svg id="playIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path d="M16.6582 9.28638C18.098 10.1862 18.8178 10.6361 19.0647 11.2122C19.2803 11.7152 19.2803 12.2847 19.0647 12.7878C18.8178 13.3638 18.098 13.8137 16.6582 14.7136L9.896 18.94C8.29805 19.9387 7.49907 20.4381 6.83973 20.385C6.26501 20.3388 5.73818 20.0469 5.3944 19.584C5 19.053 5 18.1108 5 16.2264V7.77357C5 5.88919 5 4.94701 5.3944 4.41598C5.73818 3.9531 6.26501 3.66111 6.83973 3.6149C7.49907 3.5619 8.29805 4.06126 9.896 5.05998L16.6582 9.28638Z"
+                          stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                </g>
+            </svg>
+        </button>
+
+
+    </div>
+
+    <div id="overlay-pause" class="fade-in">
+
+        <div>
+            <h2>Your Mission:</h2>
+            <p>You are lost in the Project Universe. To find your way back home, you need to orient yourself using the planets around you. Locate all the planets and return home.</p>
+        </div>
+        <div>
+
+            <h2>Controls</h2>
+            <table style="width:100%">
+                <tr>
+                    <td>W / UP</td>
+                    <td>Accelerate</td>
+                </tr>
+                <tr>
+                    <td>S / DOWN</td>
+                    <td>Deccelerate</td>
+                </tr>
+                <tr>
+                    <td>A / LEFT</td>
+                    <td>Turn Left</td>
+                </tr>
+                <tr>
+                    <td>D / Right</td>
+                    <td>Turn Right</td>
+                </tr>
+                <tr>
+                    <td>Space</td>
+                    <td>Open Map</td>
+                </tr>
+            </table>
+            <p>Click on any planet<br>to enter or exit it.</p>
+
+        </div>
+
+        <!-- Music by  -->
+        <!-- Sound Effect by  -->
+
+        <div>
+            <h3>Credits</h3>
+            <table style="width:100%">
+                <tr>
+                    <td>Music by </td>
+                    <td><a href="https://pixabay.com/users/lvymusic-27953103/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=124841">Yurii Kohut</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=124841">Pixabay</a> </td>
+                </tr>
+                <tr>
+                    <td>Soundeffect by</td>
+                    <td><a href="https://pixabay.com/users/jci21-31266556/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=164114">JC I</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=164114">Pixabay</a></td>
+                </tr>
+                <tr>
+                    <td>Particlesystem from</td>
+                    <td><a href="https://github.com/simondevyoutube/ThreeJS_Tutorial_ParticleSystems">simondevyoutube</a></td>
+                </tr>
+                <tr>
+                    <td>Rocket 3D-Modell by </td>
+                    <td><a href="https://sketchfab.com/3d-models/rocket-high-poly-simple-free-34eb9f0902f640a0a112e6f16261b755"> brazzy_CGI </td>
+                </tr>
+            </table>
+
+        </div>
+
+    </div>
+
+    <div id="text-planetNr">0 / N Planets visited</div>
+
+    <div id="overlay-planet" class="overlay-hide">
 
         <p id="TL">Projekt Planet: <br></p>
         <div class="line" id="lineTL1"></div>
@@ -33,7 +141,15 @@
         </div>
 
 
+    </div>
 
+    <div id="youDied">
+        <div>YOU DIED</div>
+        <div>Press F5 to play again</div>
+    </div>
+    <div id="youWon">
+        <div>YOU WON</div>
+        <div>Press F5 to play again</div>
     </div>
 </div>
 
