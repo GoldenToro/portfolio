@@ -564,5 +564,27 @@ body {
         }
     }
 
+    #youDied {
+        div:nth-child(1) {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+        }
+
+        div:nth-child(2) {
+            top: 70%;
+        }
+    }
+
+    #youWon {
+        div:nth-child(1) {
+            top: 30%;
+            left: 50%;
+        }
+
+        div:nth-child(2) {
+            top: 70%;
+        }
+    }
 
 }
