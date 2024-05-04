@@ -972,14 +972,21 @@ function loadScene() {
         document.body.appendChild(stats.dom)
     }
 
+    const SizeFaktor = 1
+
     const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(2.0);
+    var body = document.body;
+
+// Get the body's width and height
+    var bodyWidth = body.offsetWidth;
+    var bodyHeight = body.offsetHeight;
+    renderer.setSize(bodyWidth, bodyHeight);
+    renderer.setPixelRatio(1.0);
     document.body.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
 
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / (window.innerHeight), 1, 5000);
     camera.position.set(0, 0, 2500);
 
     if (systemParams.debugPlanets) {
@@ -1123,16 +1130,19 @@ function loadScene() {
     toggleButton.addEventListener('click', toggleAudio);
     pauseButton.addEventListener('click', toggleRendering);
 
+
+
     // ##################### Handling ####################
 
     // Arrow key handling
-    const keyState = {};
     document.addEventListener('keydown', (event) => {
         keyState[event.code] = true;
     });
     document.addEventListener('keyup', (event) => {
         keyState[event.code] = false;
     });
+
+
     renderer.domElement.addEventListener('click', checkClick, false)
 
     // ##################### Animation ####################
