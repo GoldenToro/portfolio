@@ -7,6 +7,8 @@
 
 body {
     margin: 0;
+    width: 100vw;
+    height: 100vh;
 
     overflow: hidden;
 
@@ -159,6 +161,89 @@ body {
             pointer-events: auto;
         }
     }
+}
+
+#overlay-mobileControl {
+
+    position: absolute;
+
+    top: 0; /* Adjust top position as needed */
+    left: 0; /* Adjust left position as needed */
+    height: 100%; /* Adjust left position as needed */
+    width: 100%; /* Adjust left position as needed */
+
+    display: none;
+    pointer-events: none;
+
+    #rightButton {
+        height: 11%;
+        width: 15%;
+        right: 14%;
+        bottom: 5%;
+
+    }
+
+    #leftButton {
+        height: 11%;
+        width: 15%;
+        left: 15%;
+        bottom: 5%;
+
+        svg {
+            transform: rotate(180deg);
+        }
+    }
+
+    #topButton {
+        height: 5%;
+        width: 30%;
+        left: 35%;
+        bottom: 11%;
+
+        svg {
+            transform: rotate(270deg);
+        }
+    }
+
+    #bottomButton {
+        height: 5%;
+        width: 30%;
+        left: 35%;
+        bottom: 5%;
+
+        svg {
+            transform: rotate(90deg);
+        }
+    }
+
+    .svg-button {
+        position: absolute;
+        background-color: rgb(0 0 0 / 50%);
+        border: 2px solid #fff;
+        border-radius: 15px;
+        margin-right: 10px;
+        cursor: pointer;
+        width: 50px;
+        height: 50px;
+        color: white;
+        transition: 0.5s all;
+        pointer-events: all;
+
+        svg {
+            width: 4vh;
+            pointer-events: none;
+        }
+    }
+
+    .svg-button:hover {
+        background-color: rgb(255 255 255 / 80%);
+        border: 2px solid #ffffff;
+
+        svg {
+            color: black;
+        }
+    }
+
 }
 
 #youWon {
@@ -371,5 +456,32 @@ body {
 
     #text-planetNr {
         right: 1%;
+        font-size: medium;
+    }
+
+    #overlay-mobileControl {
+
+        display: block; !important;
+    }
+
+
+    #overlay-pause {
+
+        top: 10%;
+        left: 5%;
+        height: 85%;
+        width: 88%;
+        padding: 1%;
+        font-size: small;
+
+
+        h2 {
+            margin: 2px 0px ;
+        }
+
+        td {
+            padding: 2px 8px ;
+        }
+
     }
 }
