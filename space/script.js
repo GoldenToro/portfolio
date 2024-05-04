@@ -1200,6 +1200,8 @@ function loadScene() {
                     orbitObject.material.color.set(0x111111);
                 }
 
+                var buttons = document.getElementById('overlay-mobileControl');
+                buttons.classList.add('hide');
                 updatePlanetText();
             }
 
@@ -1207,6 +1209,9 @@ function loadScene() {
 
             activePlanet = null;
             updatePlanetText();
+
+            var buttons = document.getElementById('overlay-mobileControl');
+            buttons.classList.remove('hide');
 
             if (won) {
                 var overlay = document.getElementById('youWon');

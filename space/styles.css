@@ -171,9 +171,11 @@ body {
     left: 0; /* Adjust left position as needed */
     height: 100%; /* Adjust left position as needed */
     width: 100%; /* Adjust left position as needed */
-
+    opacity: 1;
     display: none;
     pointer-events: none;
+
+    transition: all 1s;
 
     #rightButton {
         height: 11%;
@@ -252,6 +254,11 @@ body {
         }
     }
 
+}
+
+#overlay-mobileControl.hide {
+    opacity: 0;
+    pointer-events: none;
 }
 
 #youWon {
@@ -422,6 +429,7 @@ body {
 
 }
 
+
 .overlay-hide {
 
     #text-planetNr {
@@ -470,7 +478,7 @@ body {
 
     #overlay-mobileControl {
 
-        display: block; !important;
+        display: block !important;
     }
 
 
@@ -485,12 +493,76 @@ body {
 
 
         h2 {
-            margin: 2px 0px ;
+            margin: 2px 0px;
         }
 
         td {
-            padding: 2px 8px ;
+            padding: 2px 8px;
         }
 
     }
+
+    #overlay-planet {
+
+        font-size: xx-small;
+
+        p {
+            margin: 2px 0px;
+        }
+
+        td {
+            padding: 2px 8px;
+        }
+
+        #TL {
+            top: 10%;
+            font-size: medium;
+        }
+
+        #lineTL1 {
+            top: 17%;
+        }
+
+        #lineTL2 {
+            top: 16.9%;
+        }
+
+        #BL {
+            max-height: 50%;
+            max-width: 40%;
+        }
+
+        #TR {
+            top: 10%;
+            right: 0%;
+            font-size: large;
+        }
+
+        #lineTR1 {
+            height: 3%;
+
+            top: 22.5%;
+            right: 15.5%;
+        }
+
+        #lineTR2 {
+            height: 16%;
+            top: 24.7%;
+        }
+
+        #BR {
+            font-size: small;
+        }
+
+        #lineBR1 {
+            bottom: 4.5%;
+        }
+
+        #lineBR2 {
+            width: 34%;
+            bottom: 4.3%;
+        }
+    }
+
+
 }
