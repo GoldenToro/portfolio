@@ -178,7 +178,7 @@ body {
     #rightButton {
         height: 11%;
         width: 15%;
-        right: 14%;
+        right: 10%;
         bottom: 5%;
 
     }
@@ -186,7 +186,7 @@ body {
     #leftButton {
         height: 11%;
         width: 15%;
-        left: 15%;
+        left: 10%;
         bottom: 5%;
 
         svg {
@@ -197,7 +197,7 @@ body {
     #topButton {
         height: 5%;
         width: 30%;
-        left: 35%;
+        left: 42%;
         bottom: 11%;
 
         svg {
@@ -208,12 +208,20 @@ body {
     #bottomButton {
         height: 5%;
         width: 30%;
-        left: 35%;
+        left: 42%;
         bottom: 5%;
 
         svg {
             transform: rotate(90deg);
         }
+    }
+
+    #worldButton {
+        height: 11%;
+        width: 15%;
+        left: 26%;
+        bottom: 5%;
+
     }
 
     .svg-button {
@@ -427,6 +435,7 @@ body {
 
     a {
         color: rgba(0, 0, 0, 0);
+        pointer-events: none;
     }
 
 

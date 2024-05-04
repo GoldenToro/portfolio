@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="shortcut icon" href="#">
     <title>Procedural Planets</title>
     <link rel="stylesheet" type="text/css" href="/space/styles.css">
 </head>
 
-<body><div id="app">
+<body>
+<div id="app">
 
     <div id="overlay-menu">
 
@@ -97,8 +98,8 @@
             <h3>Credits</h3>
             <table style="width:100%">
                 <tr>
-                    <td>Music by </td>
-                    <td><a href="https://pixabay.com/users/lvymusic-27953103/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=124841">Yurii Kohut</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=124841">Pixabay</a> </td>
+                    <td>Music by</td>
+                    <td><a href="https://pixabay.com/users/lvymusic-27953103/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=124841">Yurii Kohut</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=124841">Pixabay</a></td>
                 </tr>
                 <tr>
                     <td>Soundeffect by</td>
@@ -109,7 +110,7 @@
                     <td><a href="https://github.com/simondevyoutube/ThreeJS_Tutorial_ParticleSystems">simondevyoutube</a></td>
                 </tr>
                 <tr>
-                    <td>Rocket 3D-Modell by </td>
+                    <td>Rocket 3D-Modell by</td>
                     <td><a href="https://sketchfab.com/3d-models/rocket-high-poly-simple-free-34eb9f0902f640a0a112e6f16261b755"> brazzy_CGI </a></td>
                 </tr>
             </table>
@@ -147,6 +148,7 @@
     <script>
 
         const keyState = {};
+
         function startKeyPress(key) {
             keyState[key] = true; // Set key state to true
         }
@@ -159,6 +161,15 @@
     <div id="overlay-mobileControl">
 
         <!-- Pause/Resume Rendering button -->
+        <button id="worldButton" class="svg-button" onkeyup="event.preventDefault()" ontouchstart="startKeyPress('Space')" ontouchend="stopKeyPress('Space')">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path d="M12 6H12.01M9 20L3 17V4L5 5M9 20L15 17M9 20V14M15 17L21 20V7L19 6M15 17V14M15 6.2C15 7.96731 13.5 9.4 12 11C10.5 9.4 9 7.96731 9 6.2C9 4.43269 10.3431 3 12 3C13.6569 3 15 4.43269 15 6.2Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+            </svg>
+        </button>
         <button id="rightButton" class="svg-button" onkeyup="event.preventDefault()" ontouchstart="startKeyPress('ArrowRight')" ontouchend="stopKeyPress('ArrowRight')">
             <svg id="playIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>

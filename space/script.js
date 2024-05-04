@@ -980,13 +980,15 @@ function loadScene() {
 // Get the body's width and height
     var bodyWidth = body.offsetWidth;
     var bodyHeight = body.offsetHeight;
+
+    console.log("Height: "+bodyHeight+" ; Width: "+bodyWidth)
     renderer.setSize(bodyWidth, bodyHeight);
     renderer.setPixelRatio(1.0);
     document.body.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
 
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / (window.innerHeight), 1, 5000);
+    const camera = new THREE.PerspectiveCamera(75, bodyWidth / bodyHeight, 1, 5000);
     camera.position.set(0, 0, 2500);
 
     if (systemParams.debugPlanets) {
@@ -1508,9 +1510,16 @@ function loadScene() {
     // Events
     window.addEventListener('resize', () => {
         // Resize camera aspect ratio and renderer size to the new window size
-        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.aspect = bodyHeight / bodyWidth;
         camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        var body = document.body;
+
+// Get the body's width and height
+        var bodyWidth = body.offsetWidth;
+        var bodyHeight = body.offsetHeight;
+
+        console.log("Height: "+bodyHeight+" ; Width: "+bodyWidth)
+        renderer.setSize(bodyWidth, bodyHeight);
     });
 
     animate();
