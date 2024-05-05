@@ -9,7 +9,7 @@
     "type": "web",
     "pics": [
       {
-        "path": "pics/gg.png",
+        "path": "/pics/gg.png",
         "text": "Golden Ghost Startseite"
       }
     ],
@@ -25,15 +25,15 @@
     "type": "web",
     "pics": [
       {
-        "path": "pics/mxgld.jpg",
+        "path": "/pics/mxgld.jpg",
         "text": "MXGLD.de Startseite"
       },
       {
-        "path": "pics/mxgld-newsletter.jpg",
+        "path": "/pics/mxgld-newsletter.jpg",
         "text": "Admin-Panel Newsletter mit Vorschau"
       },
       {
-        "path": "pics/mxgld-nutzer.jpg",
+        "path": "/pics/mxgld-nutzer.jpg",
         "text": "Admin-Panel Nutzer"
       }
     ],
@@ -49,7 +49,7 @@
     "type": "web",
     "pics": [
       {
-        "path": "pics/mittag.jpg",
+        "path": "/pics/mittag.jpg",
         "text": "Speisekarten Screenshot"
       }
     ],
@@ -65,7 +65,7 @@
     "type": "web",
     "pics": [
       {
-        "path": "pics/mxgld.jpg",
+        "path": "/pics/mxgld.jpg",
         "text": "Portfolio"
       }
     ],
