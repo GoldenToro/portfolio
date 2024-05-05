@@ -5,104 +5,76 @@
     <title>Portfolio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/845af3b9f1.js" crossorigin="anonymous"></script>
 
 </head>
 
 <body>
-<!--thanks hyperplexed for the background effect https://codepen.io/Hyperplexed/pen/KKBjvbG -->
-<div id="blob"></div>
-<div id="blur"></div>
 
 <div id="container">
+    <main class="main flow">
+        <h1 class="main__heading">There are many ways to visualize data online. Here, I provide you with four different ways to discover my projects. <br>Have fun :)</h1>
+        <div class="main__cards cards">
+            <div class="cards__inner">
+                <div class="cards__card card">
+                    <p class="card__price">Game</p>
+                    <p class="text">Be an explorer and uncover a universe full of projects through an interactive journey.</p>
+                    <p class="rating">
+                        <span>Function:</span> <span><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></span>
+                    </p>
+                    <p class="rating">
+                        <span>Design:</span> <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                    </p>
+                    <a href="/space" class="card__cta cta">Start playing</a>
+                </div>
 
-    <div id="headline">
-        <h1 id="this">PORTFOLIO</h1>
-        <h6 id="byWho">Max Göldner</h6>
-    </div>
+                <div class="cards__card card">
+                    <p class="card__price">Design</p>
+                    <p class="text">Experience the beauty of creativity firsthand and discover how design elevates every aspect of my projects.</p>
+                    <p class="rating">
+                        <span>Function:</span> <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></span>
+                    </p>
+                    <p class="rating">
+                        <span>Design:</span> <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i><i class="fa-regular fa-star"></i></span>
+                    </p>
+                    <a href="/Design" class="card__cta cta">Discover now</a>
+                </div>
 
-    <div class="card-container no-scrollbar">
+                <div class="cards__card card">
+                    <p class="card__price">Function</p>
+                    <p class="text">Dive into an experience showcasing each project in an efficient and streamlined way.</p>
+                    <p class="rating">
+                        <span>Function:</span> <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i><i class="fa-regular fa-star"></i></span>
+                    </p>
+                    <p class="rating">
+                        <span>Design:</span> <span><i class="fa-solid fa-star"></i><i class="fa-regular fa-star-half-stroke"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></span>
+                    </p>
+                    <a href="#" class="card__cta cta">Unavailable</a>
+                </div>
+                <div class="cards__card card">
+                    <p class="card__price">Raw</p>
+                    <p class="text">If you like your steak like your data, you are in luck.</p>
 
+                    <p class="rating">
+                        <span>Function:</span> <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                    </p>
+                    <p class="rating">
+                        <span>Design:</span> <span><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></span>
+                    </p>
+                    <a href="data.json" class="card__cta cta">Use it</a>
+                </div>
+            </div>
 
-    </div>
-
-    <div class="project-button prev hide">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-        </svg>
-    </div>
-
-    <div class="project-button next hide">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-        </svg>
-    </div>
+            <div class="overlay cards__inner"></div>
+        </div>
+    </main>
 
 </div>
 
 
-<template id="card">
-    <div class="card ">
-        <div class="side front">
-            <div class="title"></div>
-        </div>
-        <div class="side back">
 
-            <div class="more">
-                <svg fill="none" stroke="currentColor" class="checkmark" xmlns="http://www.w3.org/2000/svg"
-                     viewBox="0 0 52 52">
-                    <path class="checkmark__check" d="M21 16 16 16 16 21 M16 16 24 24
-							M21 16 16 16 16 21 M16 16 24 24
-							M31 16 36 16 36 21 M36 16 28 24
-							M31 36 36 36 36 31 M36 36 28 28
-							M21 36 16 36 16 31 M16 36 24 28
-		"/>
-                </svg>
-            </div>
-            <div class="title"></div>
-            <div class="exit">
-                <svg fill="none" stroke="currentColor" class="checkmark" xmlns="http://www.w3.org/2000/svg"
-                     viewBox="0 0 52 52">
-                    <path class="checkmark__check" d="M16 16 36 36 M36 16 16 36"/>
-                </svg>
-            </div>
-            <div class="statusbar">
-                <div class="status"></div>
-                <div class="tags"></div>
-            </div>
-            <div class="bigFlex"></div>
-            <div class="slider">
-                    <div class="slider-button prev unavailable">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"
-                                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
-                    </div>
-                    <div class="slider-button prev mobile"></div>
-
-                    <div class="slider-button next">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"
-                                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
-                    </div>
-                <div class="slider-button next mobile"></div>
-            </div>
-
-            <div class="links"></div>
-            <div class="bigFlex"></div>
-            <div class="text no-scrollbar"></div>
-            <div class="textBlurContainer"><p>MORE</p></div>
-
-        </div>
-        <div class="background"></div>
-    </div>
-</template>
-
-<script src="data.js"></script>
-<script src="effects.js"></script>
+<script src="/effects.js"></script>
 </body>
 </html>
