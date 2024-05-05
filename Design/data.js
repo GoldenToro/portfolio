@@ -4,7 +4,7 @@ const template = document.querySelector("#card");
 var data = [];
 
 
-$.getJSON("/Design/data.json", function(json) {
+$.getJSON("/data.json", function(json) {
     console.log(json)
     data  = json;
 
