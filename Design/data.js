@@ -38,7 +38,7 @@ function fillCard(card, obj, name) {
         if (j != 0 ) {
             extraStyle = "right";
         }
-        $(card).find('.slider').append(`<div class="slide ${extraStyle}" title="${tag["text"]}" style="background-image: url(//${obj["pics"][j]["path"]});"></div>`);
+        $(card).find('.slider').append(`<div class="slide ${extraStyle}" title="${tag["text"]}" style="background-image: url(${obj["pics"][j]["path"]});"></div>`);
 
       }
 
